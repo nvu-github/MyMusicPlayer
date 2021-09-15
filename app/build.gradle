@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+    id 'com.huawei.agconnect'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
+
+    defaultConfig {
+        applicationId "com.huawei.mymusicplayer"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 10100300
+        versionName "1.1.0.300"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+
+    signingConfigs {
+        config {
+            storeFile file('C:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/keystore.jks')
+            storePassword 'linhthuuc'
+            keyPassword 'linhthuuc'
+            keyAlias 'key0'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'org.jetbrains:annotations:15.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.huawei.agconnect:agconnect-core:1.3.1.300'
+    implementation 'com.huawei.hms:audiokit-player:1.3.0.301'
+    implementation 'com.huawei.hms:hwid:5.2.0.300'
+    implementation 'com.google.firebase:firebase-bom:28.4.0'
+}

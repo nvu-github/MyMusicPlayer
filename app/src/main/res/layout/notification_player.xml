@@ -1,0 +1,162 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:Android="http://schemas.android.com/tools"-->
+
+<!--    android:id="@+id/layout_content"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:paddingStart="16dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout_title"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal">-->
+
+<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/image_icon"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/icon_notifaction_music" />&ndash;&gt;-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/app_name"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            Android:textAlignment="viewStart"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/app_name"-->
+<!--            android:textColor="#E6000000"-->
+<!--          />-->
+
+<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/image_close"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:padding="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_marginStart="12dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@drawable/ic_system_public_delete_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/icon_notification_bar_close" />&ndash;&gt;-->
+<!--&lt;!&ndash;    </LinearLayout>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/image_cover"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="48dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:scaleType="fitXY"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginBottom="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@id/layout_title"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:src="@drawable/icon_notifaction_default" />&ndash;&gt;-->
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout_text"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/layout_title"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginTop="1dp"-->
+<!--        android:layout_toEndOf="@id/image_cover"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text_song"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            Android:textAlignment="viewStart"-->
+<!--            android:ellipsize="end"-->
+<!--            android:lines="1"-->
+<!--            android:maxWidth="200dp"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="#E6000000"-->
+<!--           />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/text_artist"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            Android:textAlignment="viewStart"-->
+<!--            android:layout_marginStart="4dp"-->
+<!--            android:ellipsize="end"-->
+<!--            android:lines="1"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textColor="#E6000000" />-->
+<!--    </LinearLayout>-->
+
+
+<!--&lt;!&ndash;    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/layout_control"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_below="@id/layout_text"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_toEndOf="@id/image_cover"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginStart="2dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginEnd="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:orientation="horizontal">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/space"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_weight="1" />&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/image_last"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingStart="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingEnd="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingTop="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingBottom="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@drawable/ic_system_public_delete_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/ic_notification_before" />&ndash;&gt;-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/image_toggle"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingStart="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingEnd="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingTop="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingBottom="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:tint="#E6000000"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@drawable/ic_system_public_delete_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/ic_notification_stop" />&ndash;&gt;-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/image_next"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="32dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingStart="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingEnd="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingTop="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingBottom="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@drawable/ic_system_public_delete_selector"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/ic_notification_next" />&ndash;&gt;-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_weight="1" />-->
+
+<!--    </LinearLayout>-->
+
+
+<!--</RelativeLayout>-->
