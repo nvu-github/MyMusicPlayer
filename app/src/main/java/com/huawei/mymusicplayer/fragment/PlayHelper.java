@@ -1,6 +1,7 @@
 package com.huawei.mymusicplayer.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -68,7 +69,6 @@ public class PlayHelper {
                             mHwAudioPlayerManager = hwAudioManager.getPlayerManager();
                             mHwAudioQueueManager = hwAudioManager.getQueueManager();
                             mHwAudioConfigManager = hwAudioManager.getConfigManager();
-                            // 获取音效实例
                             effectManager = hwAudioManager.getEffectManager();
                             doRestInit(context);
                         } catch (Exception e) {
@@ -99,8 +99,8 @@ public class PlayHelper {
                     }
                 }
                 mHwAudioConfigManager.setSaveQueue(true);
-//                mHwAudioConfigManager.setNotificationFactory(
-//                        new SubINotificationFactory((Application) context.getApplicationContext(), mHwAudioManager));
+                mHwAudioConfigManager.setNotificationFactory(
+                        new SubINotificationFactory((Application) context.getApplicationContext(), mHwAudioManager));
             }
         });
     }
@@ -131,7 +131,6 @@ public class PlayHelper {
     public void buildLocal(Context context) {
         if (context != null && mHwAudioPlayerManager != null) {
             Log.i(TAG, "Ling in");
-
             mHwAudioPlayerManager.playList(sampleData.getLocalPlayList(context), 0, 0);
         }else{
             Log.i(TAG, "Ling out");
