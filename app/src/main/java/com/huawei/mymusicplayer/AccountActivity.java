@@ -58,7 +58,7 @@ public class AccountActivity extends AppCompatActivity{
     }
 
     public void guestAction(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LayoutMain.class);
         startActivity(intent);
     }
     public void huaweiAction(View v) {
