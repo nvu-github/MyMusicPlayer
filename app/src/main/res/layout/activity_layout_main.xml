@@ -6,10 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".LayoutMain">
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/searchview_background"
+        android:iconifiedByDefault="false"
+        android:queryHint="Nhập tên bài hát"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_above="@+id/viewpaper"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpaper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600dp"
         android:layout_above="@+id/bottomview"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

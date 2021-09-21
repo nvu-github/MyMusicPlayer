@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Heart Beat</string>
+    <string name="app_name">LTU-Music</string>
     <!--    <string name="sound_effect">"sound effect"</string>-->
     <string name="pro_layout">ProLayout</string>
     <string name="set_cache">Cache Settings</string>
