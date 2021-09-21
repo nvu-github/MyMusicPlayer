@@ -22,7 +22,7 @@ android {
 
     signingConfigs {
         config {
-            storeFile file('C:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/keystore.jks')
+            storeFile file('D:/project_android/MyMusicPlayer/keystore.jks')
             storePassword 'linhthuuc'
             keyPassword 'linhthuuc'
             keyAlias 'key0'
@@ -63,4 +63,7 @@ dependencies {
     implementation 'com.huawei.hms:audiokit-player:1.3.0.301'
     implementation 'com.huawei.hms:hwid:5.2.0.300'
     implementation 'com.google.firebase:firebase-bom:28.4.0'
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

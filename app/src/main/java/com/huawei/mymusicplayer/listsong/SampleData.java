@@ -11,7 +11,9 @@ import com.huawei.mymusicplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
@@ -126,6 +128,41 @@ public class SampleData {
             }
         }
 
+        return playItemList;
+    }
+    public List<HwAudioPlayItem> getLocalPlaylistCategory(Context context, ArrayList<HashMap<String, String>> dataJson) {
+        List<HwAudioPlayItem> playItemList = new ArrayList<>();
+        Cursor cursor = null;
+        HwAudioPlayItem songItem;
+        for(Map<String, String> map : dataJson)
+        {
+            String tagName = map.get("name");
+            Log.i("DataJson", tagName);
+        }
+        try {
+            for(Map<String, String> map : dataJson)
+            {
+                String id_value = map.get("id");
+                String name_value = map.get("name");
+                String artist_value = map.get("artist");
+                String link_value = map.get("link");
+                String avatar_value = map.get("avatar");
+
+                songItem = new HwAudioPlayItem();
+                songItem.setAudioTitle(name_value);
+                songItem.setAudioId(id_value.hashCode() + "");
+                songItem.setFilePath(link_value);
+                songItem.setSinger(artist_value);
+                songItem.setMidImageURL(avatar_value);
+                playItemList.add(songItem);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, TAG, e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
         return playItemList;
     }
 }

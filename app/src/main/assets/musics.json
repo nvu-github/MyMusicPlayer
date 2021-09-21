@@ -1,0 +1,48 @@
+{
+  "vpop": [
+    {
+      "id": "v0",
+      "name": "2 Phút Hơn (KAIZ Remix)",
+      "artist": "Pháo",
+      "link": "hms_res://twozero",
+      "avatar": "file:///android_asset/twozero_img.jpg"
+    },
+    {
+      "id": "v1",
+      "name": "Bùa Yêu",
+      "artist": "Bích Phương",
+      "link": "hms_res://buayeu",
+      "avatar": ""
+    },
+    {
+      "id": "v2",
+      "name": "Trên tình bạn dưới tình yêu",
+      "artist": "Min",
+      "link": "hms_res://upfriendshipdownlove",
+      "avatar": ""
+    },
+    {
+      "id": "v3",
+      "name": "Đi đu đưa đi",
+      "artist": "Bích Phương",
+      "link": "hms_res://diduduadi",
+      "avatar": ""
+    }
+  ],
+  "kpop": [
+    {
+      "id": "k0",
+      "name": "BAAM",
+      "artist": "MOMOLAND",
+      "link": "hms_res://baam",
+      "avatar": ""
+    },
+    {
+      "id": "k1",
+      "name": "BBoom BBoom",
+      "artist": "MOMOLAND",
+      "link": "hms_res://bboom",
+      "avatar": ""
+    }
+  ]
+}
