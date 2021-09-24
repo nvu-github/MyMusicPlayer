@@ -10,6 +10,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Play songs to prevent CPU from sleeping. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+        <queries>
+            <intent>
+                <action android:name="com.huawei.hms.core.aidlservice" />
+            </intent>
+        </queries>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -18,7 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMusicPlayer">
-        <activity android:name=".LayoutMain"></activity>
+        <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".LayoutMain" />
 
         <meta-data
             android:name="com.huawei.hms.client.channel.androidMarket"

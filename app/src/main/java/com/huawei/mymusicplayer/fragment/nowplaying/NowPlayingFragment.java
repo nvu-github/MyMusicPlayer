@@ -85,7 +85,7 @@ public class NowPlayingFragment extends Fragment implements AbsListView.OnScroll
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PlayHelper.getInstance().playAt(position - mListView.getHeaderViewsCount());
+                PlayHelper.getInstance().playAt(position - mListView.getHeaderViewsCount()); // chuyen bai khi click vao list view
             }
         });
         mListView.setOnScrollListener(this);

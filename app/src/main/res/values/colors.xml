@@ -19,4 +19,6 @@
     <color name="playback_notification_bg_color">#0C000000</color>
     <color name="signInButton">#ed563b</color>
     <color name="signInButtonGuest">#25a8db</color>
+
+    <color name="backgroundCategory">#FFF7F7</color>
 </resources>

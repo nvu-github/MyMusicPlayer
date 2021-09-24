@@ -21,6 +21,8 @@ import com.huawei.hms.audiokit.player.manager.HwAudioQueueManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.mymusicplayer.listsong.SampleData;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -136,7 +138,16 @@ public class PlayHelper {
             Log.i(TAG, "Ling out");
         }
     }
-
+    public void builtCategory(Context context, ArrayList<HashMap<String, String>> dataJson) {
+        Log.i(TAG, "content: "+context);
+        Log.i(TAG, "hms: "+mHwAudioPlayerManager);
+        if (context != null && mHwAudioPlayerManager != null) {
+            Log.i(TAG, "builtCategory in");
+            mHwAudioPlayerManager.playList(sampleData.getLocalPlaylistCategory(context, dataJson), 0, 0);
+        }else{
+            Log.i(TAG, "builtCategory out");
+        }
+    }
     public void seek(long pos) {
         Log.i(TAG, "seek: " + pos);
         if (mHwAudioPlayerManager == null) {
@@ -153,6 +164,21 @@ public class PlayHelper {
 //            mHwAudioPlayerManager.playList(playItemList, 0, 0);
 //        }
 //    }
+    public void setPlayMode(int mode) {
+        Log.i(TAG, "setPlayMode: " + mode);
+        if (mHwAudioPlayerManager == null) {
+            Log.w(TAG, "play err");
+            return;
+        }
+        mHwAudioPlayerManager.setPlayMode(mode);
+    }
+    public int getPlayMode() {
+        if (mHwAudioPlayerManager == null) {
+            Log.w(TAG, "getPlayMode err");
+            return 0;
+        }
+        return mHwAudioPlayerManager.getPlayMode();
+    }
 
     public int getBufferPercentage() {
         if (mHwAudioPlayerManager == null) {
