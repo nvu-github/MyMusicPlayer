@@ -39,66 +39,23 @@
 <!--            android:textColor="@color/white"-->
 <!--            android:textSize="16sp"></TextView>-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/volume_silent"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            />-->
-<!--        <SeekBar-->
-<!--            android:id="@+id/volume_seekbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="24dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:focusable="false"-->
-<!--            android:maxHeight="2dip"-->
-<!--            android:minHeight="2dip"-->
-<!--            android:paddingStart="6dip"-->
-<!--            android:paddingTop="11dp"-->
-<!--            android:paddingEnd="0dip"-->
-<!--            android:paddingBottom="11dp"-->
-<!--            android:progress="0"-->
-<!--            android:progressDrawable="@drawable/seekbar_android_style"-->
-<!--            android:scrollbarStyle="outsideOverlay"-->
-<!--            android:secondaryProgress="0"-->
-<!--            android:thumb="@null" />-->
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
         android:orientation="vertical"
+        android:gravity="center"
         android:scaleType="fitXY">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_rotation"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:src="@drawable/playbg"/>
-
-<!--        <TextView-->
-<!--            android:id="@+id/songName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:minHeight="21dp"-->
-<!--            android:text="@string/unknowsong"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="21sp">-->
-
-<!--        </TextView>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/singerName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:minHeight="21dp"-->
-<!--            android:text="@string/unknowsong"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="16sp"></TextView>-->
-
+            android:src="@drawable/playbg"
+            />
 
     </LinearLayout>
 
@@ -147,7 +104,7 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingBottom="22.5dp"
-            android:paddingTop="40dp" >
+            android:paddingTop="40dp">
         </FrameLayout>
     </RelativeLayout>
 

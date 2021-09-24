@@ -61,31 +61,30 @@ public class SubINotificationFactory implements INotificationFactory {
             remoteViews.setOnClickPendingIntent(R.id.layout_content, getMainIntent());
             return builder.build();
         }
-        return null;
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(application, null);
-//        RemoteViews remoteViews = new RemoteViews(application.getPackageName(), R.layout.statusbar);
-//        builder.setContent(remoteViews);
-////        builder.setSmallIcon(R.drawable.icon_notifaction_music);
-//        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-//        builder.setCustomBigContentView(remoteViews);
-//        NotificationUtils.addChannel(application, NotificationUtils.NOTIFY_CHANNEL_ID_PLAY, builder);
-//        boolean isQueueEmpty = hwAudioManager.getQueueManager().isQueueEmpty();
-//        Bitmap bitmap;
-//        bitmap = notificationConfig.getBitmap();
-//        setBitmap(remoteViews, bitmap);
-//        boolean isPlaying = hwAudioManager.getPlayerManager().isPlaying() && !isQueueEmpty;
-//        remoteViews.setImageViewResource(R.id.widget_id_control_play,
-//                isPlaying ? R.drawable.notify_btn_pause_selector : R.drawable.notify_btn_play_selector);
-//        HwAudioPlayItem playItem = hwAudioManager.getQueueManager().getCurrentPlayItem();
-//        remoteViews.setTextViewText(R.id.trackname, playItem.getAudioTitle());
-//        remoteViews.setTextViewText(R.id.artistalbum, playItem.getSinger());
-//        remoteViews.setImageViewResource(R.id.widget_id_control_prev, R.drawable.notify_btn_close_selector);
-//        remoteViews.setImageViewResource(R.id.widget_id_control_next, R.drawable.notify_btn_next_selector);
-//        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_prev, getCancelPendingIntent());
-//        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_play, notificationConfig.getPlayPendingIntent());
-//        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_next, notificationConfig.getNextPendingIntent());
-//        remoteViews.setOnClickPendingIntent(R.id.statusbar_layout, getMainIntent());
-//        return builder.build();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(application, null);
+        RemoteViews remoteViews = new RemoteViews(application.getPackageName(), R.layout.statusbar);
+        builder.setContent(remoteViews);
+        builder.setSmallIcon(R.drawable.icon_notifaction_music);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setCustomBigContentView(remoteViews);
+        NotificationUtils.addChannel(application, NotificationUtils.NOTIFY_CHANNEL_ID_PLAY, builder);
+        boolean isQueueEmpty = hwAudioManager.getQueueManager().isQueueEmpty();
+        Bitmap bitmap;
+        bitmap = notificationConfig.getBitmap();
+        setBitmap(remoteViews, bitmap);
+        boolean isPlaying = hwAudioManager.getPlayerManager().isPlaying() && !isQueueEmpty;
+        remoteViews.setImageViewResource(R.id.widget_id_control_play,
+                isPlaying ? R.drawable.notify_btn_pause_selector : R.drawable.notify_btn_play_selector);
+        HwAudioPlayItem playItem = hwAudioManager.getQueueManager().getCurrentPlayItem();
+        remoteViews.setTextViewText(R.id.trackname, playItem.getAudioTitle());
+        remoteViews.setTextViewText(R.id.artistalbum, playItem.getSinger());
+        remoteViews.setImageViewResource(R.id.widget_id_control_prev, R.drawable.notify_btn_close_selector);
+        remoteViews.setImageViewResource(R.id.widget_id_control_next, R.drawable.notify_btn_next_selector);
+        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_prev, getCancelPendingIntent());
+        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_play, notificationConfig.getPlayPendingIntent());
+        remoteViews.setOnClickPendingIntent(R.id.widget_id_control_next, notificationConfig.getNextPendingIntent());
+        remoteViews.setOnClickPendingIntent(R.id.statusbar_layout, getMainIntent());
+        return builder.build();
     }
 
     private void setBitmap(RemoteViews remoteViews, Bitmap bitmap) {

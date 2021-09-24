@@ -1,37 +1,30 @@
 package com.huawei.mymusicplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.SeekBar;
+import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huawei.hmf.tasks.OnFailureListener;
-import com.huawei.hmf.tasks.OnSuccessListener;
-import com.huawei.hmf.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
+import com.huawei.mymusicplayer.home.ItemHome;
 import com.huawei.mymusicplayer.ui.seek.SeekBarFragment;
-//import com.huawei.mymusicplayer.utils.PlayModeUtils;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+//import com.huawei.mymusicplayer.utils.PlayModeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -45,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NowPlayingFragment mNowPlayingFragment;
 
     private TextView mSongName;
+
+    private CircleImageView mCircleImageView;
 
 //    private TextView mSingerName;
 
@@ -105,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -116,6 +110,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        startanimation();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null){
+            return;
+        }
+        ItemHome itemHome = (ItemHome) bundle.get("object");
+        Toast.makeText(this, "key: "+itemHome.getKey()+ ", type: "+itemHome.getType(), Toast.LENGTH_SHORT).show();
+
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
         PlayHelper.getInstance().buildLocal(MainActivity.this);
@@ -123,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViews() {
         mSongName = ViewUtils.findViewById(this, R.id.songName);
-//        mSingerName = ViewUtils.findViewById(this, R.id.singerName);
+        mCircleImageView = ViewUtils.findViewById(this,R.id.img_rotation);
+
         mSeekBarFragment = SeekBarFragment.newInstance();
         addFragment(R.id.pro_layout, mSeekBarFragment);
         mPlayControlButtonFragment = PlayControlButtonFragment.newInstance();
@@ -131,16 +135,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNowPlayingFragment = NowPlayingFragment.newInstance(true);
         addFragment(R.id.playlist_layout, mNowPlayingFragment);
 
-//        ImageView mVolumeSilent = ViewUtils.findViewById(this, R.id.volume_silent);
-//        mVolumeSilent.setOnClickListener(this);
-//        SeekBar mVolumeSeekBar = ViewUtils.findViewById(this, R.id.volume_seekbar);
-//        ViewUtils.setVisibility(mVolumeSeekBar, false);
-//        ViewUtils.setVisibility(mVolumeSilent, false);
 //        ImageView mSettingMenu = ViewUtils.findViewById(this, R.id.setting_content_layout);
 //        mSettingMenu.setOnClickListener(this);
 
 //        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
 //        mPlayModeView.setOnClickListener(this);
+    }
+
+    public void startanimation(){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mCircleImageView.animate().rotationBy(360).withEndAction(this).setDuration(5000)
+                        .setInterpolator(new LinearInterpolator()).start();
+            }
+        };
+        mCircleImageView.animate().rotationBy(360).withEndAction(runnable).setDuration(5000)
+                .setInterpolator(new LinearInterpolator()).start();
+    }
+
+    public void stopanimation(){
+        mCircleImageView.animate().cancel();
     }
 
     private void addFragment(int id, Fragment fragment) {
@@ -157,11 +172,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 //        switch (v.getId()) {
 //            case R.id.playmode_imagebutton:
-////                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
+//                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
 //                break;
-////            case R.id.setting_content_layout:
-////                showMenuDialog();
-////                break;
+//            case R.id.setting_content_layout:
+//                showMenuDialog();
+//                break;
 //            default:
 //                break;
 //        }

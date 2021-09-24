@@ -52,7 +52,6 @@ public class LayoutMain extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
