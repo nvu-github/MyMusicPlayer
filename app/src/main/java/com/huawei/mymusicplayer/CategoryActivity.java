@@ -144,16 +144,16 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
             Log.i(TAG, "my length list: "+lengthMyList);
             PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
 
-            switch (category){
-                case "":
-                    Log.i(TAG,"category none");
-                    PlayHelper.getInstance().buildLocal(CategoryActivity.this);
-                break;
-                default:
-                    Log.i(TAG,"category default");
-                    PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
-                    break;
-            }
+//            switch (category){
+//                case "":
+//                    Log.i(TAG,"category none");
+//                    PlayHelper.getInstance().buildLocal(CategoryActivity.this);
+//                break;
+//                default:
+//                    Log.i(TAG,"category default");
+//                    PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
+//                    break;
+//            }
         }
     }
     @Override
