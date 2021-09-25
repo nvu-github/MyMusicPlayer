@@ -67,12 +67,6 @@
             </LinearLayout>
         </LinearLayout>
 
-<!--        <com.huawei.mymusicplayer.ui.nowplaying.BufferMelody-->
-<!--            android:id="@+id/melody_area"-->
-<!--            android:layout_width="32dp"-->
-<!--            android:layout_height="32dp"-->
-<!--            android:layout_gravity="center_vertical" />-->
-
 <!--        <ImageView-->
 <!--            android:id="@+id/delete"-->
 <!--            android:layout_width="32dp"-->

@@ -19,6 +19,7 @@ import com.huawei.hms.audiokit.player.manager.HwAudioPlayerConfig;
 import com.huawei.hms.audiokit.player.manager.HwAudioPlayerManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioQueueManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
+import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.listsong.SampleData;
 
 import java.util.ArrayList;
@@ -130,12 +131,11 @@ public class PlayHelper {
         mTempListeners.remove(listener);
     }
 
-    public void buildLocal(Context context) {
+    public void buildLocal(Context context, List<ItemSongHome> itemSongHomes) {
         if (context != null && mHwAudioPlayerManager != null) {
-            Log.i(TAG, "Ling in");
-            mHwAudioPlayerManager.playList(sampleData.getLocalPlayList(context), 0, 0);
+            mHwAudioPlayerManager.playList(sampleData.getLocalPlayList(context,itemSongHomes), 0, 0);
         }else{
-            Log.i(TAG, "Ling out");
+            Log.i(TAG, "Can't not buld local");
         }
     }
     public void builtCategory(Context context, ArrayList<HashMap<String, String>> dataJson) {

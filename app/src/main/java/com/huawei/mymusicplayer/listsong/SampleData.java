@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.huawei.hms.api.bean.HwAudioPlayItem;
-import com.huawei.mymusicplayer.R;
+import com.huawei.mymusicplayer.home.ItemSongHome;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class SampleData {
         return playItemList;
     }
 
-    public List<HwAudioPlayItem> getLocalPlayList(Context context) {
+    public List<HwAudioPlayItem> getLocalPlayList(Context context, List<ItemSongHome> itemSongHomes) {
         List<HwAudioPlayItem> playItemList = new ArrayList<>();
         Cursor cursor = null;
         try {
@@ -77,47 +77,55 @@ public class SampleData {
                     }
                 }
             }
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("2 Phút Hơn (KAIZ Remix)");
-            songItem.setAudioId("twozero".hashCode() + "");
-            songItem.setFilePath("hms_res://twozero");
-            songItem.setSinger("Pháo");
-            playItemList.add(songItem);
-
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("BBoom BBoom");
-            songItem.setAudioId("bboom".hashCode() + "");
-            songItem.setFilePath("hms_res://bboom");
-            songItem.setSinger("MOMOLAND");
-            playItemList.add(songItem);
-
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("BAAM");
-            songItem.setAudioId("baam".hashCode() + "");
-            songItem.setFilePath("hms_res://baam");
-            songItem.setSinger("MOMOLAND");
-            playItemList.add(songItem);
-
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("Bùa Yêu");
-            songItem.setAudioId("buayeu".hashCode() + "");
-            songItem.setFilePath("hms_res://buayeu");
-            songItem.setSinger("Bích Phương");
-            playItemList.add(songItem);
-
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("Đi đu đưa đi");
-            songItem.setAudioId("diduduadi".hashCode() + "");
-            songItem.setFilePath("hms_res://diduduadi");
-            songItem.setSinger("Bích Phương");
-            playItemList.add(songItem);
-
-            songItem = new HwAudioPlayItem();
-            songItem.setAudioTitle("Trên tình bạn dưới tình yêu");
-            songItem.setAudioId("upfriendshipdownlove".hashCode() + "");
-            songItem.setFilePath("hms_res://upfriendshipdownlove");
-            songItem.setSinger("Min");
-            playItemList.add(songItem);
+            for (int i = 0 ; i < itemSongHomes.size() ; i++){
+                songItem = new HwAudioPlayItem();
+                songItem.setAudioTitle(itemSongHomes.get(i).getAudioTitle());
+                songItem.setAudioId(itemSongHomes.get(i).getAudioId().hashCode() + "");
+                songItem.setFilePath(itemSongHomes.get(i).getFilePath());
+                songItem.setSinger(itemSongHomes.get(i).getSinger());
+                playItemList.add(songItem);
+            }
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("2 Phút Hơn (KAIZ Remix)");
+//            songItem.setAudioId("twozero".hashCode() + "");
+//            songItem.setFilePath("hms_res://twozero");
+//            songItem.setSinger("Pháo");
+//            playItemList.add(songItem);
+//
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("BBoom BBoom");
+//            songItem.setAudioId("bboom".hashCode() + "");
+//            songItem.setFilePath("hms_res://bboom");
+//            songItem.setSinger("MOMOLAND");
+//            playItemList.add(songItem);
+//
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("BAAM");
+//            songItem.setAudioId("baam".hashCode() + "");
+//            songItem.setFilePath("hms_res://baam");
+//            songItem.setSinger("MOMOLAND");
+//            playItemList.add(songItem);
+//
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("Bùa Yêu");
+//            songItem.setAudioId("buayeu".hashCode() + "");
+//            songItem.setFilePath("hms_res://buayeu");
+//            songItem.setSinger("Bích Phương");
+//            playItemList.add(songItem);
+//
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("Đi đu đưa đi");
+//            songItem.setAudioId("diduduadi".hashCode() + "");
+//            songItem.setFilePath("hms_res://diduduadi");
+//            songItem.setSinger("Bích Phương");
+//            playItemList.add(songItem);
+//
+//            songItem = new HwAudioPlayItem();
+//            songItem.setAudioTitle("Trên tình bạn dưới tình yêu");
+//            songItem.setAudioId("upfriendshipdownlove".hashCode() + "");
+//            songItem.setFilePath("hms_res://upfriendshipdownlove");
+//            songItem.setSinger("Min");
+//            playItemList.add(songItem);
 
 
         } catch (Exception e) {

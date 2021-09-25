@@ -1,5 +1,6 @@
 package com.huawei.mymusicplayer;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +14,16 @@ import androidx.fragment.app.Fragment;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
+import com.huawei.mymusicplayer.Database.Database;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
 import com.huawei.mymusicplayer.home.ItemHome;
+import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.ui.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mSongName;
 
     private CircleImageView mCircleImageView;
+
+    private Database database;
+
 
 //    private TextView mSingerName;
 
@@ -119,9 +126,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ItemHome itemHome = (ItemHome) bundle.get("object");
         Toast.makeText(this, "key: "+itemHome.getKey()+ ", type: "+itemHome.getType(), Toast.LENGTH_SHORT).show();
 
+//        databaseProcessing();
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
-        PlayHelper.getInstance().buildLocal(MainActivity.this);
+        PlayHelper.getInstance().buildLocal(MainActivity.this,databaseProcessing(itemHome.getKey()));
     }
 
     private void initViews() {
@@ -218,4 +226,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        builder.create().show();
 //    }
 
+    private List<ItemSongHome> databaseProcessing(int key){
+//        create database
+        database = new Database(this);
+//        create table
+        database.QueryData("CREATE TABLE IF NOT EXISTS CaSi(Id INTEGER PRIMARY KEY, AudioTitle VARCHAR(255), AudioId VARCHAR(255), FilePath VARCHAR(255), Singer VARCHAR(255), TypeCaSi INTEGER) ");
+//        insert data
+//        database.QueryData("INSERT INTO CaSi VALUES(1,'Trên tình bạn dưới tình yêu','upfriendshipdownlove','hms_res://upfriendshipdownlove','Min',1)");
+//        database.QueryData("INSERT INTO CaSi VALUES(2,'Đi đu đưa đi','diduduadi','hms_res://diduduadi','Bích Phương',2)");
+        Cursor getData = database.GetData("SELECT * FROM CaSi WHERE TypeCaSi = " + key);
+
+        List<ItemSongHome> itemSongHomes = new ArrayList<>();
+        while (getData.moveToNext()){
+            String title        = getData.getString(1);
+            String audioId      = getData.getString(2);
+            String url          = getData.getString(3);
+            String singername   = getData.getString(4);
+            itemSongHomes.add(new ItemSongHome(title,audioId,url,singername));
+//            Toast.makeText(this, "Name: "+title + ", Url: "+url + ", singername: "+singername , Toast.LENGTH_LONG).show();
+        }
+        return itemSongHomes;
+    }
 }
