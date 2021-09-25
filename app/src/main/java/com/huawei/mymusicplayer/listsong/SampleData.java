@@ -134,6 +134,7 @@ public class SampleData {
         List<HwAudioPlayItem> playItemList = new ArrayList<>();
         Cursor cursor = null;
         HwAudioPlayItem songItem;
+        int lengthMyList = dataJson.toArray().length;
         for(Map<String, String> map : dataJson)
         {
             String tagName = map.get("name");

@@ -1,15 +1,8 @@
 package com.huawei.mymusicplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
@@ -58,7 +50,6 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private HwAudioStatusListener mPlayListener = new HwAudioStatusListener() {
         @Override
         public void onSongChange(HwAudioPlayItem song) {
-            Log.i(TAG, "onSongChange");
             updateSongName(song);
             if (mNowPlayingFragment != null) {
                 mNowPlayingFragment.updatePlayingPos();
@@ -117,11 +108,11 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         // huawei
-        initViews();
         PlayHelper.getInstance().addListener(mPlayListener);
         Bundle extras  = getIntent().getExtras();
         if (extras  != null) {
             String category = extras .getString("category");
+            initViews(category);
             // get file json xử lý json ở đây do function loadJSONFromAsset dưới chỉ nhận ở Activity k nhận ở class
             ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
             try {
@@ -148,15 +139,16 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            int lengthMyList = songsList.size();
+            Log.i(TAG, "my length list: "+lengthMyList);
+            PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
+
             switch (category){
-                case "vpop":
-                    Log.i(TAG,"category vpop");
-                    PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
+                case "":
+                    Log.i(TAG,"category none");
+                    PlayHelper.getInstance().buildLocal(CategoryActivity.this);
                 break;
-                case "kpop":
-                    Log.i(TAG,"category kpop");
-                    PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
-                    break;
                 default:
                     Log.i(TAG,"category default");
                     PlayHelper.getInstance().builtCategory(CategoryActivity.this, songsList);
@@ -169,7 +161,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
        PlayModeUtils.getInstance().updatePlayMode(this, mPlayModeView);
     }
-    private void initViews() {
+    private void initViews(String codeCategory) {
         mSongName = ViewUtils.findViewById(this, R.id.songName);
         mSingerName = ViewUtils.findViewById(this, R.id.singerName);
         mSongImage = ViewUtils.findViewById(this, R.id.songImage);
@@ -180,15 +172,29 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         mNowPlayingFragment = NowPlayingFragment.newInstance(true);
         addFragment(R.id.playlist_layout, mNowPlayingFragment);
 
-        ImageView mVolumeSilent = ViewUtils.findViewById(this, R.id.volume_silent);
-        mVolumeSilent.setOnClickListener(this);
-        SeekBar mVolumeSeekBar = ViewUtils.findViewById(this, R.id.volume_seekbar);
-        ViewUtils.setVisibility(mVolumeSeekBar, false);
-        ViewUtils.setVisibility(mVolumeSilent, false);
+//        ImageView mVolumeSilent = ViewUtils.findViewById(this, R.id.volume_silent);
+//        mVolumeSilent.setOnClickListener(this);
+//        SeekBar mVolumeSeekBar = ViewUtils.findViewById(this, R.id.volume_seekbar);
+//        ViewUtils.setVisibility(mVolumeSeekBar, false);
+//        ViewUtils.setVisibility(mVolumeSilent, false);
+
         ImageView mSettingMenu = ViewUtils.findViewById(this, R.id.setting_content_layout);
         mSettingMenu.setOnClickListener(this);
         mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
         mPlayModeView.setOnClickListener(this);
+            ImageView imageView = (ImageView) findViewById(R.id.img_rotation);
+            switch (codeCategory){
+                case "kpop":
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.list_top100_kpop));
+                break;
+                case "vpop":
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.list_top100_nhactre));
+                    break;
+                default:
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.playbg));
+                    break;
+            }
+
     }
 
     private void addFragment(int id, Fragment fragment) {
