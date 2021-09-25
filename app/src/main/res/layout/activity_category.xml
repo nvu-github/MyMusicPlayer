@@ -4,65 +4,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF"
+    android:background="#e3e3e3"
     tools:context=".CategoryActivity">
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/volume_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:visibility="visible">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/volume_silent"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            />-->
+<!--        <SeekBar-->
+<!--            android:id="@+id/volume_seekbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:focusable="false"-->
+<!--            android:maxHeight="2dip"-->
+<!--            android:minHeight="2dip"-->
+<!--            android:paddingStart="6dip"-->
+<!--            android:paddingTop="11dp"-->
+<!--            android:paddingEnd="0dip"-->
+<!--            android:paddingBottom="11dp"-->
+<!--            android:progress="0"-->
+<!--            android:progressDrawable="@drawable/seekbar_android_style"-->
+<!--            android:scrollbarStyle="outsideOverlay"-->
+<!--            android:secondaryProgress="0"-->
+<!--            android:thumb="@null" />-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/volume_content"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="visible">
-        <ImageView
-            android:id="@+id/volume_silent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-        <SeekBar
-            android:id="@+id/volume_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:maxHeight="2dip"
-            android:minHeight="2dip"
-            android:paddingStart="6dip"
-            android:paddingTop="11dp"
-            android:paddingEnd="0dip"
-            android:paddingBottom="11dp"
-            android:progress="0"
-            android:progressDrawable="@drawable/seekbar_android_style"
-            android:scrollbarStyle="outsideOverlay"
-            android:secondaryProgress="0"
-            android:thumb="@null" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/songImage"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/playbg"
         android:orientation="vertical"
-        android:scaleType="fitXY">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/songName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:minHeight="21dp"
+            android:layout_marginTop="10dp"
             android:text="@string/unknowsong"
-            android:textSize="18sp">
-
+            android:textColor="@color/black"
+            android:textSize="21sp">
         </TextView>
-
         <TextView
             android:id="@+id/singerName"
             android:layout_width="wrap_content"
@@ -70,9 +69,46 @@
             android:layout_gravity="center_horizontal"
             android:minHeight="21dp"
             android:text="@string/unknowsong"
-            android:textSize="12sp"></TextView>
+            android:textColor="@color/black"
+            android:textSize="16sp"></TextView>
 
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/songImage"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:scaleType="fitXY">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_rotation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/playbg"
+            />
+
+<!--        <TextView-->
+<!--            android:id="@+id/songName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:minHeight="21dp"-->
+<!--            android:text="@string/unknowsong"-->
+<!--            android:textSize="18sp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/singerName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:minHeight="21dp"-->
+<!--            android:text="@string/unknowsong"-->
+<!--            android:textSize="12sp"/>-->
     </LinearLayout>
 
     <RelativeLayout
@@ -97,8 +133,6 @@
             android:layout_below="@id/pro_layout"
             android:layout_marginTop="14.5dp"
             android:scaleType="center"
-            android:background="#e0e0e0"
-
             />
 
         <ImageView
@@ -110,7 +144,6 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/menu_more_normal"
             android:scaleType="center"
-            android:background="#e0e0e0"
             android:layout_marginTop="14.5dp"
             />
 
