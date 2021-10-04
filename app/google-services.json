@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "17879539626",
-    "project_id": "devproject-511e4",
-    "storage_bucket": "devproject-511e4.appspot.com"
+    "project_number": "477523538131",
+    "project_id": "mymusicplayer-6fff9",
+    "storage_bucket": "mymusicplayer-6fff9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:17879539626:android:e0f1b7941c6ea1cce295d3",
+        "mobilesdk_app_id": "1:477523538131:android:72e7e8122fe045c9d46426",
         "android_client_info": {
           "package_name": "com.huawei.mymusicplayer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "17879539626-e7n5l3ee61i0q85fnbtr12oi50miqpqe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.huawei.mymusicplayer",
-            "certificate_hash": "5f3e4b31db8e10ce3778236d92b1951472c9e3e1"
-          }
-        },
-        {
-          "client_id": "17879539626-1c7jn1nk82lgpa6brs7rodnfdcc9k6d3.apps.googleusercontent.com",
+          "client_id": "477523538131-8c13i2k5cnlho7rr0dsg1a19esuq02e7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyATa8BEOyFGKekOB0JJah2fNWq3ZJc_5lM"
+          "current_key": "AIzaSyAk5a7aEJe-U8zKUXfb_cw7Jb97OFguTac"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "17879539626-1c7jn1nk82lgpa6brs7rodnfdcc9k6d3.apps.googleusercontent.com",
+              "client_id": "477523538131-8c13i2k5cnlho7rr0dsg1a19esuq02e7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -8,7 +8,9 @@ import android.widget.Toast;
 import com.huawei.mymusicplayer.R;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
 
-import static com.huawei.mymusicplayer.AccountActivity.TAG;
+import static android.content.ContentValues.TAG;
+
+//import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
 /**
  * Play mode utils

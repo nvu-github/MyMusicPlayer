@@ -1,16 +1,30 @@
 package com.huawei.mymusicplayer.home;
 
 public class ItemSongHome {
+    private int id;
     private String AudioTitle;
     private String AudioId;
     private String FilePath;
     private String Singer;
 
-    public ItemSongHome(String audioTitle, String audioId, String filePath, String singer) {
+    public ItemSongHome(){
+
+    }
+
+    public ItemSongHome(int id, String audioTitle, String audioId, String filePath, String singer) {
+        this.id = id;
         AudioTitle = audioTitle;
         AudioId = audioId;
         FilePath = filePath;
         Singer = singer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAudioTitle() {

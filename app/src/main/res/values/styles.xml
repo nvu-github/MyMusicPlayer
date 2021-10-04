@@ -14,6 +14,10 @@
         <item name="colorAccent">@color/black_100_opacity</item>
     </style>
 
+    <style name="sPlashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_flashscreen</item>
+    </style>
+
     <style name="roundimageview">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">5dp</item>

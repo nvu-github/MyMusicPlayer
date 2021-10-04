@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
@@ -22,6 +28,8 @@ import com.huawei.mymusicplayer.home.ItemHome;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.ui.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.utils.ViewUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        databaseProcessing();
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
-        PlayHelper.getInstance().buildLocal(MainActivity.this,databaseProcessing(itemHome.getKey()));
+        PlayHelper.getInstance().buildOnlineList();
+//        PlayHelper.getInstance().buildLocal(MainActivity.this,databaseProcessing(itemHome.getKey()));
     }
 
     private void initViews() {
@@ -143,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNowPlayingFragment = NowPlayingFragment.newInstance(true);
         addFragment(R.id.playlist_layout, mNowPlayingFragment);
 
-//        ImageView mSettingMenu = ViewUtils.findViewById(this, R.id.setting_content_layout);
-//        mSettingMenu.setOnClickListener(this);
+        ImageView mSettingMenu = ViewUtils.findViewById(this, R.id.setting_content_layout);
+        mSettingMenu.setOnClickListener(this);
 
 //        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
 //        mPlayModeView.setOnClickListener(this);
@@ -178,16 +187,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
+        switch (v.getId()) {
 //            case R.id.playmode_imagebutton:
 //                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
 //                break;
-//            case R.id.setting_content_layout:
+            case R.id.setting_content_layout:
+                addAlldata();
 //                showMenuDialog();
-//                break;
-//            default:
-//                break;
-//        }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void addAlldata(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("list_singer");
+
+        ItemSongHome itemSongHome = new ItemSongHome(0,"Daydream","1000","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin1.mp3?alt=media&token=c51f4cf4-4c9e-461a-8a89-ffcb6cb3151a","soobin");
+        reference.child(String.valueOf(0)).setValue(itemSongHome, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable @org.jetbrains.annotations.Nullable DatabaseError error, @NonNull @NotNull DatabaseReference ref) {
+                Toast.makeText(MainActivity.this, "add success", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        List<ItemSongHome> list = new ArrayList<>();
+//        list.add(new ItemSongHome(0,"Daydream","1000","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin1.mp3?alt=media&token=c51f4cf4-4c9e-461a-8a89-ffcb6cb3151a","Soobin Hoàng Sơn"));
+//        list.add(new ItemSongHome(1,"Đẹp nhất là em","1002","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin2.mp3?alt=media&token=0a16c795-9925-4a19-87d2-b602f1ed6b18","Soobin Hoàng Sơn"));
+//        list.add(new ItemSongHome(2,"Đi để trở về","1003","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin3.mp3?alt=media&token=21f34184-e606-4a4f-929c-69c86591ab2c","Soobin Hoàng Sơn"));
+//        list.add(new ItemSongHome(3,"Vài lần đón đưa","1004","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin4.mp3?alt=media&token=d7c2239a-d019-4d68-9f14-c279b51360f0","Soobin Hoàng Sơn"));
+//        list.add(new ItemSongHome(4,"Vinh quang đang chờ ta","1005","https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin5.mp3?alt=media&token=57375cce-9ac2-4ae7-a7d8-0f86d3e98cf4","Soobin Hoàng Sơn"));
+//
+//        Log.i(TAG, "addAlldata: " + list.size());
+//        reference.setValue(list, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable @org.jetbrains.annotations.Nullable DatabaseError error, @NonNull @NotNull DatabaseReference ref) {
+//                Toast.makeText(MainActivity.this, "add successfull", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void updateSongName(HwAudioPlayItem playItem) {
@@ -232,19 +269,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        create table
         database.QueryData("CREATE TABLE IF NOT EXISTS CaSi(Id INTEGER PRIMARY KEY, AudioTitle VARCHAR(255), AudioId VARCHAR(255), FilePath VARCHAR(255), Singer VARCHAR(255), TypeCaSi INTEGER) ");
 //        insert data
-        database.QueryData("INSERT INTO CaSi VALUES(1,'Trên tình bạn dưới tình yêu','upfriendshipdownlove','hms_res://upfriendshipdownlove','Min',1)");
-        database.QueryData("INSERT INTO CaSi VALUES(2,'Đi đu đưa đi','diduduadi','hms_res://diduduadi','Bích Phương',2)");
+//        database.QueryData("INSERT INTO CaSi VALUES(1,'Trên tình bạn dưới tình yêu','upfriendshipdownlove','hms_res://upfriendshipdownlove','Min',1)");
+//        database.QueryData("INSERT INTO CaSi VALUES(2,'Đi đu đưa đi','diduduadi','hms_res://diduduadi','Bích Phương',2)");
         Cursor getData = database.GetData("SELECT * FROM CaSi WHERE TypeCaSi = " + key);
 
         List<ItemSongHome> itemSongHomes = new ArrayList<>();
-        while (getData.moveToNext()){
-            String title        = getData.getString(1);
-            String audioId      = getData.getString(2);
-            String url          = getData.getString(3);
-            String singername   = getData.getString(4);
-            itemSongHomes.add(new ItemSongHome(title,audioId,url,singername));
-//            Toast.makeText(this, "Name: "+title + ", Url: "+url + ", singername: "+singername , Toast.LENGTH_LONG).show();
-        }
+//        while (getData.moveToNext()){
+//            String title        = getData.getString(1);
+//            String audioId      = getData.getString(2);
+//            String url          = getData.getString(3);
+//            String singername   = getData.getString(4);
+//            itemSongHomes.add(new ItemSongHome(title,audioId,url,singername));
+////            Toast.makeText(this, "Name: "+title + ", Url: "+url + ", singername: "+singername , Toast.LENGTH_LONG).show();
+//        }
         return itemSongHomes;
     }
 }

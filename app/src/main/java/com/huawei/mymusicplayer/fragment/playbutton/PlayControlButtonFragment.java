@@ -16,7 +16,7 @@ import com.huawei.mymusicplayer.R;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
-import static com.huawei.mymusicplayer.AccountActivity.TAG;
+//import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
 public class PlayControlButtonFragment extends Fragment implements View.OnClickListener {
 
@@ -73,7 +73,7 @@ public class PlayControlButtonFragment extends Fragment implements View.OnClickL
 
     public void setPauseButtonImage() {
         if (null == mPlay) {
-            Log.i(TAG, "setPauseButtonImage err");
+//            Log.i(TAG, "setPauseButtonImage err");
             return;
         }
         boolean isPlaying = PlayHelper.getInstance().isPlaying();

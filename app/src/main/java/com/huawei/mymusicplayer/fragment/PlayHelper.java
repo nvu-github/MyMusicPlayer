@@ -157,13 +157,13 @@ public class PlayHelper {
         mHwAudioPlayerManager.seekTo((int) pos);
     }
 
-//    public void buildOnlineList() {
-//        Log.i(TAG, "buildOnlineList");
-//        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist();
-//        if (mHwAudioPlayerManager != null) {
-//            mHwAudioPlayerManager.playList(playItemList, 0, 0);
-//        }
-//    }
+    public void buildOnlineList() {
+        Log.i(TAG, "buildOnlineList");
+        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist();
+        if (mHwAudioPlayerManager != null) {
+            mHwAudioPlayerManager.playList(playItemList, 0, 0);
+        }
+    }
     public void setPlayMode(int mode) {
         Log.i(TAG, "setPlayMode: " + mode);
         if (mHwAudioPlayerManager == null) {

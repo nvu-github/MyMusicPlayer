@@ -15,7 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.huawei.mymusicplayer.AccountActivity.TAG;
+import static android.content.ContentValues.TAG;
+
+//import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
 public class SampleData {
 
@@ -39,10 +41,10 @@ public class SampleData {
 
         HwAudioPlayItem audioPlayItem3 = new HwAudioPlayItem();
         audioPlayItem3.setAudioId("1002");
-        audioPlayItem3.setSinger("Taoge");
-        audioPlayItem3.setOnlinePath("https://lfmusicservice.hwcloudtest.cn:18084/HMS/audio/Taoge-wangge.mp3");
+        audioPlayItem3.setSinger("sobin");
+        audioPlayItem3.setOnlinePath("https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin5.mp3?alt=media&token=57375cce-9ac2-4ae7-a7d8-0f86d3e98cf4");
         audioPlayItem3.setOnline(1);
-        audioPlayItem3.setAudioTitle("wangge");
+        audioPlayItem3.setAudioTitle("vinh quang dang cho ta");
         playItemList.add(audioPlayItem3);
         return playItemList;
     }
