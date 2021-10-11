@@ -80,4 +80,16 @@
     <string name="cur_using_effect">"Current effect:"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Home</string>
+
+    <!--Category and album for add song activity-->
+    <array name="category">
+        <item>us_uk</item>
+        <item>vpop</item>
+        <item>kpop</item>
+    </array>
+    <array name="album">
+        <item>one</item>
+        <item>more</item>
+        <item>time</item>
+    </array>
 </resources>
