@@ -14,9 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
@@ -33,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Database database;
 
+    DatabaseReference databaseSongs;
 
 //    private TextView mSingerName;
 
@@ -126,19 +130,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        startanimation();
+        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("songs");
 
         Bundle bundle = getIntent().getExtras();
+
         if (bundle == null){
             return;
-        }
-        ItemHome itemHome = (ItemHome) bundle.get("object");
-        Toast.makeText(this, "key: "+itemHome.getKey()+ ", type: "+itemHome.getType(), Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("album") != null){
+            String album    = bundle.getString("album").toLowerCase();
+            Log.i(TAG, "onCreate: album"+album);
+            List<Song> songList = new ArrayList<>();
+            databaseSongs.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    songList.clear();
+                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
+                        Song song = songSnapshot.getValue(Song.class);
+                        Log.i(TAG, "onDataChange: song album"+song.getAlbum().toLowerCase());
+                        if(album.equals(song.getAlbum().toLowerCase())){
+                            songList.add(song);
+                        }
+                    }
+                    PlayHelper.getInstance().buildOnlineList(songList);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-//        databaseProcessing();
+                }
+            });
+        }else{
+            List<Song> songList = new ArrayList<>();
+            databaseSongs.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    songList.clear();
+                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
+                        Song song = songSnapshot.getValue(Song.class);
+                        songList.add(song);
+                    }
+                    PlayHelper.getInstance().buildOnlineList(songList);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
-        PlayHelper.getInstance().buildOnlineList();
-//        PlayHelper.getInstance().buildLocal(MainActivity.this,databaseProcessing(itemHome.getKey()));
     }
 
     private void initViews() {

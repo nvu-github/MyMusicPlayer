@@ -19,6 +19,7 @@ import com.huawei.hms.audiokit.player.manager.HwAudioPlayerConfig;
 import com.huawei.hms.audiokit.player.manager.HwAudioPlayerManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioQueueManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
+import com.huawei.mymusicplayer.Song;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.listsong.SampleData;
 
@@ -157,9 +158,16 @@ public class PlayHelper {
         mHwAudioPlayerManager.seekTo((int) pos);
     }
 
-    public void buildOnlineList() {
+//    public void buildOnlineList() {
+//        Log.i(TAG, "buildOnlineList");
+//        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist();
+//        if (mHwAudioPlayerManager != null) {
+//            mHwAudioPlayerManager.playList(playItemList, 0, 0);
+//        }
+//    }
+    public void buildOnlineList(List<Song> songs) {
         Log.i(TAG, "buildOnlineList");
-        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist();
+        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist(songs);
         if (mHwAudioPlayerManager != null) {
             mHwAudioPlayerManager.playList(playItemList, 0, 0);
         }

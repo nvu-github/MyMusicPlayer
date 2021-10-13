@@ -83,13 +83,17 @@
 
     <!--Category and album for add song activity-->
     <array name="category">
-        <item>us_uk</item>
-        <item>vpop</item>
-        <item>kpop</item>
+        <item>Kpop</item>
+        <item>Vpop</item>
+        <item>Cpop</item>
+        <item>Us_UK</item>
     </array>
     <array name="album">
-        <item>one</item>
-        <item>more</item>
-        <item>time</item>
+        <item>Top 100 nhạc Nhạc trẻ</item>
+        <item>Top 100 nhạc Kpop</item>
+        <item>Top 100 Rap</item>
+        <item>Top 100 Us Uk</item>
+        <item>Top 100 Cbiz</item>
+        <item>Top 100 EDM</item>
     </array>
 </resources>

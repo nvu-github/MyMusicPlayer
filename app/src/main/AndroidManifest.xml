@@ -34,7 +34,8 @@
 
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/sPlashScreen">
+            android:theme="@style/sPlashScreen"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

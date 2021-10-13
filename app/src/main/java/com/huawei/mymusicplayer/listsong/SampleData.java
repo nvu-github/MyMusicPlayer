@@ -6,46 +6,42 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
+import com.huawei.mymusicplayer.Song;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
+
 //import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
 public class SampleData {
+    DatabaseReference databaseSongs;
 
-    public List<HwAudioPlayItem> getOnlinePlaylist() {
+    public List<HwAudioPlayItem> getOnlinePlaylist(List<Song> songs) {
         List<HwAudioPlayItem> playItemList = new ArrayList<>();
-        HwAudioPlayItem audioPlayItem1 = new HwAudioPlayItem();
-        audioPlayItem1.setAudioId("1000");
-        audioPlayItem1.setSinger("Taoge");
-        audioPlayItem1.setOnlinePath("https://lfmusicservice.hwcloudtest.cn:18084/HMS/audio/Taoge-chengshilvren.mp3");
-        audioPlayItem1.setOnline(1);
-        audioPlayItem1.setAudioTitle("chengshilvren");
-        playItemList.add(audioPlayItem1);
-
-        HwAudioPlayItem audioPlayItem2 = new HwAudioPlayItem();
-        audioPlayItem2.setAudioId("1001");
-        audioPlayItem2.setSinger("Taoge");
-        audioPlayItem2.setOnlinePath("https://lfmusicservice.hwcloudtest.cn:18084/HMS/audio/Taoge-dayu.mp3");
-        audioPlayItem2.setOnline(1);
-        audioPlayItem2.setAudioTitle("dayu");
-        playItemList.add(audioPlayItem2);
-
-        HwAudioPlayItem audioPlayItem3 = new HwAudioPlayItem();
-        audioPlayItem3.setAudioId("1002");
-        audioPlayItem3.setSinger("sobin");
-        audioPlayItem3.setOnlinePath("https://firebasestorage.googleapis.com/v0/b/mymusicplayer-6fff9.appspot.com/o/singer%2Fsoobin5.mp3?alt=media&token=57375cce-9ac2-4ae7-a7d8-0f86d3e98cf4");
-        audioPlayItem3.setOnline(1);
-        audioPlayItem3.setAudioTitle("vinh quang dang cho ta");
-        playItemList.add(audioPlayItem3);
+        for (Song song : songs) {
+            HwAudioPlayItem audioPlayItem = new HwAudioPlayItem();
+            audioPlayItem.setAudioId(song.getId());
+            audioPlayItem.setSinger(song.getArtist());
+            audioPlayItem.setOnlinePath(song.getLink());
+            audioPlayItem.setOnline(1);
+            audioPlayItem.setAudioTitle(song.getName());
+            playItemList.add(audioPlayItem);
+        }
         return playItemList;
     }
 
@@ -87,49 +83,6 @@ public class SampleData {
                 songItem.setSinger(itemSongHomes.get(i).getSinger());
                 playItemList.add(songItem);
             }
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("2 Phút Hơn (KAIZ Remix)");
-//            songItem.setAudioId("twozero".hashCode() + "");
-//            songItem.setFilePath("hms_res://twozero");
-//            songItem.setSinger("Pháo");
-//            playItemList.add(songItem);
-//
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("BBoom BBoom");
-//            songItem.setAudioId("bboom".hashCode() + "");
-//            songItem.setFilePath("hms_res://bboom");
-//            songItem.setSinger("MOMOLAND");
-//            playItemList.add(songItem);
-//
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("BAAM");
-//            songItem.setAudioId("baam".hashCode() + "");
-//            songItem.setFilePath("hms_res://baam");
-//            songItem.setSinger("MOMOLAND");
-//            playItemList.add(songItem);
-//
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("Bùa Yêu");
-//            songItem.setAudioId("buayeu".hashCode() + "");
-//            songItem.setFilePath("hms_res://buayeu");
-//            songItem.setSinger("Bích Phương");
-//            playItemList.add(songItem);
-//
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("Đi đu đưa đi");
-//            songItem.setAudioId("diduduadi".hashCode() + "");
-//            songItem.setFilePath("hms_res://diduduadi");
-//            songItem.setSinger("Bích Phương");
-//            playItemList.add(songItem);
-//
-//            songItem = new HwAudioPlayItem();
-//            songItem.setAudioTitle("Trên tình bạn dưới tình yêu");
-//            songItem.setAudioId("upfriendshipdownlove".hashCode() + "");
-//            songItem.setFilePath("hms_res://upfriendshipdownlove");
-//            songItem.setSinger("Min");
-//            playItemList.add(songItem);
-
-
         } catch (Exception e) {
             Log.e(TAG, TAG, e);
         } finally {

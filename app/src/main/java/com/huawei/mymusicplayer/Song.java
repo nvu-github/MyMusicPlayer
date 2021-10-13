@@ -8,6 +8,7 @@ public class Song {
     private String album;
     private String link;
 
+    public Song (){}
     public Song(String id, String name, String artist, String category, String album, String link) {
         this.id = id;
         this.name = name;
