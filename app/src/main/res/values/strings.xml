@@ -89,11 +89,12 @@
         <item>Us_UK</item>
     </array>
     <array name="album">
-        <item>Top 100 nhạc Nhạc trẻ</item>
+        <item>Driving</item>
         <item>Top 100 nhạc Kpop</item>
         <item>Top 100 Rap</item>
         <item>Top 100 Us Uk</item>
         <item>Top 100 Cbiz</item>
         <item>Top 100 EDM</item>
+
     </array>
 </resources>

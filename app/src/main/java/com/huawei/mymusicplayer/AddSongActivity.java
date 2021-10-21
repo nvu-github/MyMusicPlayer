@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddSongActivity extends AppCompatActivity {
+    private static final String TAG = "AddSongActivity";
     EditText txtName, txtArtist, txtLink;
     Button btnAdd;
     ScrollView scrollViewListSong;
@@ -89,6 +90,7 @@ public class AddSongActivity extends AppCompatActivity {
             String id = databaseSongs.push().getKey();
             Song song = new Song(id, name, artist, category, album, link);
             databaseSongs.child(id).setValue(song);
+            Log.i(TAG, "addSong: " + song.toString());
             Toast.makeText(this, "Add success !!!", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this, "You should enter a name song", Toast.LENGTH_LONG).show();

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         if(category == null){
             return ;
         }
-        holder.imv_category.setImageResource(category.getResourceImg());
+        holder.layout_category.setBackgroundResource(category.getResourceImg());
         holder.tv_category.setText(category.getName());
         List<Song> songList = new ArrayList<>();
         holder.mCard.setOnClickListener(new View.OnClickListener() {
@@ -80,13 +81,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public class CategoryHolder extends RecyclerView.ViewHolder{
-        private ImageView imv_category;
+        private LinearLayout layout_category;
         private TextView tv_category;
         private CardView mCard;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
-
-            imv_category = itemView.findViewById(R.id.imv_category);
+            layout_category = itemView.findViewById(R.id.layout_category);
             tv_category = itemView.findViewById(R.id.tv_category);
             mCard = itemView.findViewById(R.id.card_category);
         }

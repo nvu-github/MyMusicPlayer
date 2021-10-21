@@ -139,16 +139,7 @@ public class PlayHelper {
             Log.i(TAG, "Can't not buld local");
         }
     }
-    public void builtCategory(Context context, ArrayList<HashMap<String, String>> dataJson) {
-        Log.i(TAG, "content: "+context);
-        Log.i(TAG, "hms: "+mHwAudioPlayerManager);
-        if (context != null && mHwAudioPlayerManager != null) {
-            Log.i(TAG, "builtCategory in");
-            mHwAudioPlayerManager.playList(sampleData.getLocalPlaylistCategory(context, dataJson), 0, 0);
-        }else{
-            Log.i(TAG, "builtCategory out");
-        }
-    }
+
     public void seek(long pos) {
         Log.i(TAG, "seek: " + pos);
         if (mHwAudioPlayerManager == null) {

@@ -39,15 +39,17 @@ public class ListFragment extends Fragment {
 
     private List<Category> getListCategory(){
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category(1, R.drawable.list_top100_kpop, "Top 100 Kpop", "Kpop", "Top 100 Kpop"));
-        categoryList.add(new Category(2, R.drawable.list_top100_nhactre, "Top 100 Nhạc trẻ", "Vpop", "Top 100 Nhạc trẻ"));
+        categoryList.add(new Category(1, R.drawable.driving, "driving", "Kpop", "Top 100 Kpop"));
+        categoryList.add(new Category(2, R.drawable.ngu_ngon, "ngủ ngon", "Vpop", "Top 100 Nhạc trẻ"));
 
-        categoryList.add(new Category(3, R.drawable.list_top100_edm, "Top 100 EDM", "", "Top 100 EDM"));
-        categoryList.add(new Category(4, R.drawable.list_top100_rapviet, "Top 100 Rap", "", "Top 100 Rap"));
+        categoryList.add(new Category(3, R.drawable.giai_dieu_buon, "giai điệu buồn", "", "Top 100 EDM"));
+        categoryList.add(new Category(4, R.drawable.spa_yoga, "spa - yoga", "", "Top 100 Rap"));
 
-        categoryList.add(new Category(5, R.drawable.list_top100_usuk, "Top 100 US UK", "Us_Uk", "Top 100 US UK"));
-        categoryList.add(new Category(6, R.drawable.list_daily_cbiz, "Top 100 Cbiz", "Cpop", "Top 100 Cbiz"));
+        categoryList.add(new Category(5, R.drawable.du_lich, "du lịch", "Us_Uk", "Top 100 US UK"));
+        categoryList.add(new Category(6, R.drawable.tap_chung, "tập chung", "Cpop", "Top 100 Cbiz"));
 
+        categoryList.add(new Category(7, R.drawable.thu_gian, "thư giãn", "Us_Uk", "Top 100 US UK"));
+        categoryList.add(new Category(8, R.drawable.running, "running", "Cpop", "Top 100 Cbiz"));
         return categoryList;
     }
 }
