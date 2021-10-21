@@ -48,12 +48,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             return;
         }
         holder.tenPlaylist.setText("Name: " + playlist.getName());
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        holder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                itemClickListener.onItemClick(playlist);
-            }
-        });
+//            }
+//        });
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tenPlaylist = itemView.findViewById(R.id.tenPlaylist);
-            delete = itemView.findViewById(R.id.delete);
+            //delete = itemView.findViewById(R.id.delete);
         }
     }
 

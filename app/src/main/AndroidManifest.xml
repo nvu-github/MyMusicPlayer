@@ -43,7 +43,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LayoutMain" />
-        <activity android:name=".CategoryActivity" />
         <activity android:name=".MainActivity" />
     </application>
 
