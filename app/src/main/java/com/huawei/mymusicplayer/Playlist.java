@@ -1,27 +1,29 @@
 package com.huawei.mymusicplayer;
 
 public class Playlist {
-    String tenPlaylist;
-    int imgPlaylist;
+    String key;
+    String name;
+    public Playlist() {
 
-    public Playlist(String tenPlaylist, int imgPlaylist) {
-        this.tenPlaylist = tenPlaylist;
-        this.imgPlaylist = imgPlaylist;
+    }
+    public Playlist(String key, String name) {
+        this.key = key;
+        this.name = name;
     }
 
-    public String getTenPlaylist() {
-        return tenPlaylist;
+    public String getKey() {
+        return key;
     }
 
-    public void setTenPlaylist(String tenPlaylist) {
-        this.tenPlaylist = tenPlaylist;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public int getImgPlaylist() {
-        return imgPlaylist;
+    public String getName() {
+        return name;
     }
 
-    public void setImgPlaylist(int imgPlaylist) {
-        this.imgPlaylist = imgPlaylist;
+    public void setName(String name) {
+        this.name = name;
     }
 }

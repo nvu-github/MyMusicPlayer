@@ -132,8 +132,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/listplaylist"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listPlaylist"
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
