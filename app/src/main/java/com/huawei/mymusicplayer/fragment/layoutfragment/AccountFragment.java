@@ -1,7 +1,9 @@
 package com.huawei.mymusicplayer.fragment.layoutfragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,24 +26,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.huawei.mymusicplayer.AddSongActivity;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
-import com.huawei.mymusicplayer.Song;
-import com.huawei.mymusicplayer.SongList;
+
 
 import java.util.ArrayList;
 
@@ -80,25 +77,57 @@ public class AccountFragment extends Fragment {
         listPlaylist = view.findViewById(R.id.listPlaylist);
         listPlaylist.setLayoutManager(new LinearLayoutManager(getActivity()));
         arrPlaylist = new ArrayList<>();
-        myAdapter = new CustomAdapter(arrPlaylist);
+        myAdapter = new CustomAdapter(getActivity(), arrPlaylist, new CustomAdapter.IClickListener() {
+            @Override
+            public void onClickDeleteItem(Playlist playlist) {
+                onClickDeleteData(playlist);
+            }
+        });
 
+        listPlaylist.setAdapter(myAdapter);
         showdata();
-
-
-
         return view;
 
     }
-
-    public void showdata() {
-        database.addValueEventListener(new ValueEventListener() {
+    public void showdata()
+    {
+        database.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot Snapshot : snapshot.getChildren()){
-                    Playlist pl = Snapshot.getValue(Playlist.class);
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Playlist pl = snapshot.getValue(Playlist.class);
+                if(pl != null)
+                {
                     arrPlaylist.add(pl);
+                    myAdapter.notifyDataSetChanged();
                 }
-                listPlaylist.setAdapter(myAdapter);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Playlist pl = snapshot.getValue(Playlist.class);
+                if(pl == null || arrPlaylist == null || arrPlaylist.isEmpty()){
+                    return;
+                }
+                for(int i = 0; i<arrPlaylist.size(); i++)
+                {
+                    if(pl.getKey() == arrPlaylist.get(i).getKey())
+                    {
+                        arrPlaylist.remove(arrPlaylist.get(i));
+                        break;
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
@@ -106,6 +135,25 @@ public class AccountFragment extends Fragment {
 
             }
         });
+    }
+
+    private void onClickDeleteData(Playlist playlist){
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.app_name))
+                .setMessage("Bạn có chắc muốn xoá playlist này không?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        database.child(String.valueOf(playlist.getKey())).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(getActivity(), "Delete playlist success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
 

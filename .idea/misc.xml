@@ -26,9 +26,14 @@
         <entry key="..\:/btl_android/app/src/main/res/layout/playlist_item.xml" value="0.27447916666666666" />
         <entry key="..\:/btl_android/app/src/main/res/layout/song_list_layout.xml" value="0.2" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_delete.xml" value="0.21927083333333333" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_more.xml" value="0.22395833333333334" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/fragment_account.xml" value="0.2" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/item_home.xml" value="0.2078125" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/playlist_item.xml" value="0.264" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/simple_song_list_item.xml" value="0.2078125" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/song_list_layout.xml" value="0.2078125" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/menu/menu.xml" value="0.2078125" />
       </map>
     </option>
   </component>

@@ -2,10 +2,15 @@ package com.huawei.mymusicplayer.fragment.nowplaying;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.widget.PopupMenu;
 
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.mymusicplayer.R;
@@ -23,7 +28,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         private TextView mArtistName = null;
 
 
-        private ImageView mDeleteView;
+        private ImageView menu_song;
 
         private View lineImage = null;
     }
@@ -73,7 +78,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.mTrackName = ViewUtils.findViewById(contentView, R.id.line1);
             viewholder.mArtistName = ViewUtils.findViewById(contentView, R.id.line2);
             viewholder.lineImage = ViewUtils.findViewById(contentView, R.id.simple_line);
-//            viewholder.mDeleteView = ViewUtils.findViewById(contentView, R.id.delete);
+            viewholder.menu_song = ViewUtils.findViewById(contentView, R.id.menu_song);
             contentView.setTag(viewholder);
         }
         return contentView;
@@ -85,6 +90,34 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         viewholder.mTrackName.setText(songBean.getAudioTitle());
         viewholder.mArtistName.setText(songBean.getSinger());
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
+
+//        viewholder.menu_song.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ShowMenu();
+//            }
+//        });
+
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
+//    private void ShowMenu(){
+//        PopupMenu popupMenu = new PopupMenu();
+//        popupMenu.inflate(R.menu.menu);
+//        popupMenu.setOnMenuItemClickListener(this);
+//        popupMenu.show();
+//    }
+//    @Override
+//    public void onMenuItemClick(MenuItem item)
+//    {
+//        switch (item.getItemId()){
+//            case R.id.addToPlaylist:
+//                Log.i("them playlits", "them");
+//                break;
+//            case R.id.delete_song:
+//                Log.i("xoa playlits", "xoa");
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 }
