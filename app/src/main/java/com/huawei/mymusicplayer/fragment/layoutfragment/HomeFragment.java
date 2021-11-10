@@ -78,7 +78,6 @@ public class HomeFragment extends Fragment {
         homes.add(new ItemHome(4,R.drawable.moiphathanh4,"Sài gòn đèn xanh đèn đỏ - Hannie",1,true));
         homes.add(new ItemHome(5,R.drawable.moiphathanh5,"Nếu lúc trước em đừng tới - Hino",1,true));
         homes.add(new ItemHome(6,R.drawable.moiphathanh6,"Lựa chọn thích hợp - VAT",1,true));
-        homes.add(new ItemHome(7,R.drawable.showall,"",1,true));
         list.add(new ItemCategory("Mới phát hành",homes));
 
         List<ItemHome> homes1 = new ArrayList<>();

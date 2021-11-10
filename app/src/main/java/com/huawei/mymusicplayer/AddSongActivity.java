@@ -52,7 +52,6 @@ public class AddSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                addSong();
-
             }
         });
     }

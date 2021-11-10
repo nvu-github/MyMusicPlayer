@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.huawei.mymusicplayer.fragment.layoutfragment.Search.SearchActivity;
 import com.huawei.mymusicplayer.fragment.layoutfragment.ViewPageAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public class LayoutMain extends AppCompatActivity {
 
     private ViewPager viewPager;
+    private TextView mSearch;
     private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,7 @@ public class LayoutMain extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomview);
+        mSearch = (TextView) findViewById(R.id.txt_search);
 
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
@@ -70,6 +75,16 @@ public class LayoutMain extends AppCompatActivity {
                         break;
                 }
                 return false;
+            }
+        });
+
+        mSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LayoutMain.this, SearchActivity.class);
+//                intent.putExtra("position",position);
+//                intent.putExtra("tencasi",aListCasi.get(position).nameCasi);
+                startActivity(intent);
             }
         });
     }

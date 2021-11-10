@@ -7,13 +7,17 @@
     tools:context=".LayoutMain"
     android:orientation="vertical">
 
-    <SearchView
-        android:id="@+id/search_song"
+    <TextView
+        android:id="@+id/txt_search"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft = "@drawable/ic_baseline_search_24"
         android:background="@drawable/searchview_background"
-        android:iconifiedByDefault="false"
-        android:queryHint="Nhập tên bài hát"
+        android:text="Nhập tên bài hát"
+        android:textSize="18dp"
+        android:gravity="left|center"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />

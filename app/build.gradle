@@ -22,7 +22,7 @@ android {
 
     signingConfigs {
         config {
-            storeFile file('D:/btl_android/keystore.jks')
+            storeFile file('C:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/keystore.jks')
             storePassword 'linhthuuc'
             keyPassword 'linhthuuc'
             keyAlias 'key0'
