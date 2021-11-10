@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.huawei.mymusicplayer">
-    <!-- HMS-SDK need network permission while check if upgrade is neccessary -->
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- android4.4 To operate SD card, you need to apply for the following permissions -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" /> <!-- 9.0 Adaptation -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Play songs to prevent CPU from sleeping. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <queries>
@@ -24,6 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMusicPlayer">
+        <activity
+            android:name=".fragment.layoutfragment.Search.SearchActivity"
+            android:exported="false" >
+        </activity>
         <activity
             android:name=".AddSongActivity"
             android:exported="true" />

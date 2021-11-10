@@ -66,6 +66,7 @@ public class AccountFragment extends Fragment {
     ArrayList<Playlist> arrPlaylist;
     CustomAdapter myAdapter;
     DatabaseReference database;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +104,6 @@ public class AccountFragment extends Fragment {
 
         listPlaylist.setAdapter(myAdapter);
         return view;
-
     }
 
     public void setText(String text){

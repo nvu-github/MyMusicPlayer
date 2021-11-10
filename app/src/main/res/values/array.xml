@@ -2,7 +2,7 @@
 <resources>
     <string-array name="menu_items">
 <!--        <item>@string/online_list</item>-->
-        <item>@string/local_list</item>
+        <item>Local playlist</item>
 <!--        <item>@string/log_out</item>-->
 <!--        <item>@string/set_play</item>-->
     </string-array>

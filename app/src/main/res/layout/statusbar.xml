@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
-  ~
-  ~    Licensed under the Apache License, Version 2.0 (the "License");
-  ~    you may not use this file except in compliance with the License.
-  ~    You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~    Unless required by applicable law or agreed to in writing, software
-  ~    distributed under the License is distributed on an "AS IS" BASIS,
-  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~    See the License for the specific language governing permissions and
-  ~    limitations under the License.
-  -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/statusbar_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/statusbar_bg_selector"
-    android:contentDescription="@string/cvaa_minimize_button"
+    android:contentDescription="cvaa_minimize_button"
     android:minHeight="64dp"
     android:orientation="horizontal">
 
@@ -38,7 +23,7 @@
             android:id="@+id/widget_id_control_play"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:contentDescription="@string/cvaa_play_or_pause"
+            android:contentDescription="cvaa_play_or_pause"
             android:scaleType="center"
             android:src="@drawable/notify_btn_play_selector" />
 
@@ -48,7 +33,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="@dimen/widget_next_margin"
             android:layout_marginRight="@dimen/widget_next_margin"
-            android:contentDescription="@string/cvaa_next"
+            android:contentDescription="cvaa_next"
             android:scaleType="center"
             android:src="@drawable/notify_btn_next_selector" />
 
@@ -56,7 +41,7 @@
             android:id="@+id/widget_id_control_prev"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:contentDescription="@string/cvaa_close"
+            android:contentDescription="cvaa_close"
             android:scaleType="center"
             android:src="@drawable/notify_btn_close_selector" />
     </LinearLayout>

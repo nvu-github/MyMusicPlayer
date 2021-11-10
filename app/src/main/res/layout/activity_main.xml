@@ -7,39 +7,38 @@
     android:background="#fff"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/volume_content"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:gravity="center_vertical"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/backActivities"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_baseline_keyboard_return_24"/>
 
         <TextView
             android:id="@+id/songName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:minHeight="21dp"
-            android:layout_marginTop="10dp"
-            android:text=""
             android:textColor="@color/black"
-            android:textSize="21sp">
-        </TextView>
+            android:textSize="21sp"></TextView>
 
-<!--        <TextView-->
-<!--            android:id="@+id/singerName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:minHeight="21dp"-->
-<!--            android:text="@string/unknowsong"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="16sp"></TextView>-->
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,8 +90,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
             android:scaleType="center"
-            android:layout_marginTop="14.5dp"
-            android:src="@drawable/app_icon1">
+            android:layout_marginTop="14.5dp">
         </ImageView>
         <FrameLayout
             android:id="@+id/playback_play_layout"
