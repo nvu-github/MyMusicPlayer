@@ -2,11 +2,13 @@ package com.huawei.mymusicplayer.fragment.layoutfragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,7 +21,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,15 +35,31 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
+import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.common.ApiException;
+import com.huawei.hms.support.account.AccountAuthManager;
+import com.huawei.hms.support.account.request.AccountAuthParams;
+import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
+import com.huawei.hms.support.account.result.AuthAccount;
+import com.huawei.hms.support.account.service.AccountAuthService;
+import com.huawei.hms.support.api.entity.common.CommonConstant;
+import com.huawei.mymusicplayer.Constant;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
 
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccountFragment extends Fragment {
+    public static final String TAG = "HuaweiIdActivity";
+    private AccountAuthParams mAuthParam;
+    private AccountAuthService mAuthService;
     TextView add_playlist;
     ImageView mySong;
     RecyclerView listPlaylist;
@@ -71,9 +88,9 @@ public class AccountFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        silentSignInByHwId();
 
         database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Playlist");
-
         listPlaylist = view.findViewById(R.id.listPlaylist);
         listPlaylist.setLayoutManager(new LinearLayoutManager(getActivity()));
         arrPlaylist = new ArrayList<>();
@@ -85,13 +102,18 @@ public class AccountFragment extends Fragment {
         });
 
         listPlaylist.setAdapter(myAdapter);
-        showdata();
         return view;
 
     }
-    public void showdata()
+
+    public void setText(String text){
+        TextView textView = (TextView) getView().findViewById(R.id.profile);
+        textView.setText(text);
+    }
+
+    public void showdata(String account_id)
     {
-        database.addChildEventListener(new ChildEventListener() {
+        database.orderByChild("account_id").equalTo(account_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Playlist pl = snapshot.getValue(Playlist.class);
@@ -201,5 +223,88 @@ public class AccountFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+
+
+private  void silentSignInByHwId() {
+    // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
+    // 2. By default, DEFAULT_AUTH_REQUEST_PARAM specifies two items to be obtained, that is, the user ID and profile.
+    // 3. If your app needs to obtain the user's email address, call setEmail().
+    mAuthParam = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM)
+            .setEmail()
+            .createParams();
+
+    // Use AccountAuthParams to build AccountAuthService.
+    mAuthService = AccountAuthManager.getService(getActivity(), mAuthParam);
+
+    // Use silent sign-in to sign in with a HUAWEI ID.
+    Task<AuthAccount> task = mAuthService.silentSignIn();
+    task.addOnSuccessListener(new OnSuccessListener<AuthAccount>() {
+        @Override
+        public void onSuccess(AuthAccount authAccount) {
+            // The silent sign-in is successful. Process the returned account object AuthAccount to obtain the HUAWEI ID information.
+            dealWithResultOfSignIn(authAccount);
+        }
+    });
+    task.addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(Exception e) {
+            // The silent sign-in fails. Use the getSignInIntent() method to show the authorization or sign-in screen.
+            if (e instanceof ApiException) {
+                ApiException apiException = (ApiException) e;
+                Intent signInIntent = mAuthService.getSignInIntent();
+                // If your app appears in full-screen mode duing user sign-in, that is, with no satus bar at the top of the phone screen, add the following parameter in the intent:
+                // intent.putExtra(CommonConstant.RequestParams.IS_FULL_SCREEN, true);
+                // Check the details in this FAQ.
+                //signInIntent.putExtra(CommonConstant.RequestParams.IS_FULL_SCREEN, true);
+                startActivityForResult(signInIntent, Constant.REQUEST_CODE_SIGN_IN);
+            }
+        }
+    });
+}
+
+    /**
+     * Process the returned AuthAccount object to obtain the HUAWEI ID information.
+     *
+     * @param authAccount AuthAccount object, which contains the HUAWEI ID information.
+     */
+    private void dealWithResultOfSignIn(AuthAccount authAccount) {
+        // Obtain the HUAWEI DI information.
+        Log.i(TAG, "display name:" + authAccount.getDisplayName());
+        Log.i(TAG, "photo uri string:" + authAccount.getAvatarUriString());
+        Log.i(TAG, "photo uri:" + authAccount.getAvatarUri());
+        Log.i(TAG, "email:" + authAccount.getEmail());
+        Log.i(TAG, "openid:" + authAccount.getOpenId());
+        Log.i(TAG, "unionid:" + authAccount.getUnionId());
+        // TODO: Implement service logic after the HUAWEI ID information is obtained.
+        showdata(authAccount.getUnionId());
+        setText(authAccount.getEmail());
+        // show The Image in a ImageView
+        new DownloadImageTask((ImageView) getView().findViewById(R.id.profile_avatar))
+                .execute(authAccount.getAvatarUri().toString());
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> { // class lấy link avatar từ profile huawei convert to bitmap và hiển thị trên imageview
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

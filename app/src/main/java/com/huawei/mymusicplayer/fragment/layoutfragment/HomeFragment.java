@@ -55,6 +55,8 @@ public class HomeFragment extends Fragment {
         mListItemBanner = getListBanner();
         mBannerAdapter = new BannerAdapter(getActivity(),mListItemBanner);
         mViewBanner.setAdapter(mBannerAdapter);
+
+
         mCircleIndicator.setViewPager(mViewBanner);
         mBannerAdapter.registerDataSetObserver(mCircleIndicator.getDataSetObserver());
         autoSlideImage();
