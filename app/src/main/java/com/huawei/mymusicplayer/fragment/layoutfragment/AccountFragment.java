@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
@@ -79,6 +80,11 @@ public class AccountFragment extends Fragment {
         arrPlaylist = new ArrayList<>();
         myAdapter = new CustomAdapter(getActivity(), arrPlaylist, new CustomAdapter.IClickListener() {
             @Override
+            public void onClickUpdateItem(Playlist playlist) {
+                openDialogUpdateItem(playlist);
+            }
+
+            @Override
             public void onClickDeleteItem(Playlist playlist) {
                 onClickDeleteData(playlist);
             }
@@ -91,13 +97,15 @@ public class AccountFragment extends Fragment {
     }
     public void showdata()
     {
-        database.addChildEventListener(new ChildEventListener() {
+        Query query = database.orderByChild("name");
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Playlist pl = snapshot.getValue(Playlist.class);
                 if(pl != null)
                 {
-                    arrPlaylist.add(pl);
+                    arrPlaylist.add(pl); // sort tăng dần
+//                    arrPlaylist.add(0,pl); sort giàm dần
                     myAdapter.notifyDataSetChanged();
                 }
 
@@ -105,7 +113,16 @@ public class AccountFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                Playlist playlist = snapshot.getValue(Playlist.class);
+                if(playlist == null || arrPlaylist == null || arrPlaylist.isEmpty()){
+                    return;
+                }
+                for(int i = 0; i<arrPlaylist.size(); i++){
+                    if(playlist.getKey() == arrPlaylist.get(i).getKey())
+                    {
+                        arrPlaylist.set(i, playlist);
+                    }
+                }
             }
 
             @Override
@@ -135,6 +152,48 @@ public class AccountFragment extends Fragment {
 
             }
         });
+    }
+
+    private void openDialogUpdateItem(Playlist playlist)
+    {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit);
+
+        Window window = dialog.getWindow();
+        if(window == null){
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        EditText edit = dialog.findViewById(R.id.playlist_name_edit);
+        Button btn_edit = dialog.findViewById(R.id.btn_edit);
+        Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        edit.setText(playlist.getName());
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newName = edit.getText().toString().trim();
+                playlist.setName(newName);
+                database.child(String.valueOf(playlist.getKey())).updateChildren(playlist.toMap(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getActivity(), "Update success", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        dialog.show();
     }
 
     private void onClickDeleteData(Playlist playlist){

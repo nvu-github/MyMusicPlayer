@@ -7,17 +7,26 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.huawei.mymusicplayer.Database.Database;
 import com.huawei.mymusicplayer.fragment.layoutfragment.ViewPageAdapter;
+import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LayoutMain extends AppCompatActivity {
+import java.util.Locale;
 
+public class LayoutMain extends AppCompatActivity {
+    SearchView search_song;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
+    DatabaseReference databaseSongs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,8 @@ public class LayoutMain extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomview);
+        search_song = (SearchView) findViewById(R.id.search_song);
+        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("songs");
 
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
@@ -34,7 +45,6 @@ public class LayoutMain extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
                 switch (position){

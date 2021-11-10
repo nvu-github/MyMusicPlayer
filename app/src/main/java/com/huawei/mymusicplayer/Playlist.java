@@ -1,5 +1,8 @@
 package com.huawei.mymusicplayer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Playlist {
     String key;
     String name;
@@ -25,5 +28,11 @@ public class Playlist {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("Name", name);
+        return result;
     }
 }
