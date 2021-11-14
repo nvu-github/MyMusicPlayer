@@ -1,4 +1,4 @@
-package com.huawei.mymusicplayer;
+package com.huawei.mymusicplayer.account;
 
 public class Constant {
     public static final int IS_LOG = 1;
