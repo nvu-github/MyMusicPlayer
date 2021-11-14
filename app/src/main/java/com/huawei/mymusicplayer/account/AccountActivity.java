@@ -78,6 +78,8 @@ public class AccountActivity extends AppCompatActivity {
 
         // Use AccountAuthParams to build AccountAuthService.
         mAuthService = AccountAuthManager.getService(this, mAuthParam);
+        Log.i(TAG, "object login: " + mAuthService);
+
 
         // Use silent sign-in to sign in with a HUAWEI ID.
         Task<AuthAccount> task = mAuthService.silentSignIn();
@@ -128,6 +130,7 @@ public class AccountActivity extends AppCompatActivity {
         Intent toLayoutMain = new Intent(this,LayoutMain.class);
         startActivity(toLayoutMain);
     }
+
     private void signOut() {
         SharedPreferences.Editor editor = getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE).edit();
         if(mAuthService != null){

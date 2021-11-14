@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -56,13 +57,15 @@ public class HomeFragment extends Fragment {
         mBannerAdapter = new BannerAdapter(getActivity(),mListItemBanner);
         mViewBanner.setAdapter(mBannerAdapter);
 
-
         mCircleIndicator.setViewPager(mViewBanner);
         mBannerAdapter.registerDataSetObserver(mCircleIndicator.getDataSetObserver());
         autoSlideImage();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvc_home.setLayoutManager(linearLayoutManager);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
+        rvc_home.addItemDecoration(itemDecoration);
 
         mHomCategory.setData(getListCategory());
         rvc_home.setAdapter(mHomCategory);
@@ -74,28 +77,25 @@ public class HomeFragment extends Fragment {
         List<ItemCategory> list = new ArrayList<>();
 
         List<ItemHome> homes = new ArrayList<>();
-        homes.add(new ItemHome(1,R.drawable.moiphathanh1,"Độ tộc 2 - Độ mixi",1,true));
-        homes.add(new ItemHome(2,R.drawable.moiphathanh2,"Cứ nói yêu lần này - Lil Z",1,true));
-        homes.add(new ItemHome(3,R.drawable.moiphathanh3,"Yêu là cưới - Phát hồ",1,true));
-        homes.add(new ItemHome(4,R.drawable.moiphathanh4,"Sài gòn đèn xanh đèn đỏ - Hannie",1,true));
-        homes.add(new ItemHome(5,R.drawable.moiphathanh5,"Nếu lúc trước em đừng tới - Hino",1,true));
-        homes.add(new ItemHome(6,R.drawable.moiphathanh6,"Lựa chọn thích hợp - VAT",1,true));
+        homes.add(new ItemHome("id12",R.drawable.moiphathanh1,"Độ tộc 2 - Độ mixi",1,true));
+        homes.add(new ItemHome("id13",R.drawable.moiphathanh2,"Cứ nói yêu lần này - Lil Z",1,true));
+        homes.add(new ItemHome("id14",R.drawable.moiphathanh3,"Yêu là cưới - Phát hồ",1,true));
+        homes.add(new ItemHome("id15",R.drawable.moiphathanh4,"Sài gòn - Hannie",1,true));
+        homes.add(new ItemHome("id16",R.drawable.moiphathanh6,"Lựa chọn thích hợp - VAT",1,true));
         list.add(new ItemCategory("Mới phát hành",homes));
 
         List<ItemHome> homes1 = new ArrayList<>();
-        homes1.add(new ItemHome(1,R.drawable.sobin,"Soobin",2,false));
-        homes1.add(new ItemHome(2,R.drawable.sontung,"M-TP",2,false));
-        homes1.add(new ItemHome(3,R.drawable.mrsiro,"Mr. Siro",2,false));
-        homes1.add(new ItemHome(4,R.drawable.j97,"Jack",2,false));
-        homes1.add(new ItemHome(5,R.drawable.dattka,"Dattka",2,false));
+        homes1.add(new ItemHome("1",R.drawable.sobin,"SOOBIN",2,false));
+        homes1.add(new ItemHome("2",R.drawable.sontung,"MTP",2,false));
+        homes1.add(new ItemHome("3",R.drawable.mrsiro,"Mr.Siro",2,false));
+        homes1.add(new ItemHome("4",R.drawable.j97,"Jack",2,false));
         list.add(new ItemCategory("Ca sĩ",homes1));
 
         List<ItemHome> homes2 = new ArrayList<>();
-        homes2.add(new ItemHome(1,R.drawable.nhacv,"Nhạc Việt",3,true));
-        homes2.add(new ItemHome(2,R.drawable.nhacborelo,"Bolero",3,true));
-        homes2.add(new ItemHome(3,R.drawable.nhacviet,"Âu Mỹ",3,true));
-        homes2.add(new ItemHome(4,R.drawable.nhachan,"Nhạc Hàn",3,true));
-        homes2.add(new ItemHome(5,R.drawable.nhachoa,"Nhạc Hoa",3,true));
+        homes2.add(new ItemHome("1",R.drawable.nhacv,"Nhạc Việt",3,true));
+        homes2.add(new ItemHome("2",R.drawable.nhacviet,"Âu Mỹ",3,true));
+        homes2.add(new ItemHome("3",R.drawable.nhachan,"Nhạc Hàn",3,true));
+        homes2.add(new ItemHome("4",R.drawable.nhachoa,"Nhạc Hoa",3,true));
         list.add(new ItemCategory("Thể loại",homes2));
 
         return list;

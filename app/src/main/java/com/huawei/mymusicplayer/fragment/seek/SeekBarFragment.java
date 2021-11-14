@@ -1,4 +1,4 @@
-package com.huawei.mymusicplayer.ui.seek;
+package com.huawei.mymusicplayer.fragment.seek;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
