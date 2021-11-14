@@ -5,9 +5,6 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Include other widget or layout tags here. These are considered
-            "child views" or "children" of the linear layout -->
-
     <TextView
         android:id="@+id/tv_nameSong"
         android:layout_width="match_parent"

@@ -32,7 +32,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void setData(Context context,List<ItemHome> homes){
         this.mHome = homes;
         this.mContext = context;
-
 //        load data to adapter
         notifyDataSetChanged();
     }
