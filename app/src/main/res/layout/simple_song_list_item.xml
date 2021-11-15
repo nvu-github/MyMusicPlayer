@@ -53,11 +53,12 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/menu_song"
+            android:visibility="gone"
+            android:id="@+id/love_song"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:scaleType="center"
-            android:src="@drawable/ic_more"
+            android:src="@drawable/ic_baseline_favorite_border_24"
             android:layout_gravity="center_vertical" />
 
     </LinearLayout>
