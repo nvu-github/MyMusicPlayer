@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.huawei.hms.hwid.I;
+import com.huawei.mymusicplayer.AddSongActivity;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
@@ -48,9 +50,11 @@ import com.huawei.mymusicplayer.dialog.CustomDialog;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class AccountFragment extends Fragment {
-    TextView add_playlist, profile;
-    ImageView mySong, profile_avatar;
+public class AccountFragment extends Fragment{
+    private static final String TAG = "AccountFragment";
+    LinearLayout mySongs, favoriteSongs, signInPlease;
+    TextView add_playlist, profile, tv_addSong, tv_signIn_out;
+    ImageView mySong, profile_avatar, imv_signIn_out;
     RecyclerView listPlaylist;
     ArrayList<Playlist> arrPlaylist;
     CustomAdapter myAdapter;
@@ -61,20 +65,40 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+        // get id
         profile = view.findViewById(R.id.profile);
         profile_avatar = view.findViewById(R.id.profile_avatar);
         add_playlist = view.findViewById(R.id.add_playlist);
+        tv_addSong = view.findViewById(R.id.tv_addSong);
+        tv_signIn_out = view.findViewById(R.id.tv_signIn_out);
+        imv_signIn_out = view.findViewById(R.id.imv_signIn_out);
+        mySongs = view.findViewById(R.id.mySongs);
+        favoriteSongs = view.findViewById(R.id.favoriteSongs);
+        signInPlease = view.findViewById(R.id.signInPlease);
+        // create click event
         add_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 openDialog(Gravity.CENTER);
             }
-
         });
+        tv_addSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toAddSongActivity = new Intent(getActivity(), AddSongActivity.class);
+                startActivity(toAddSongActivity);
+            }
+        });
+        //
+        String account_id = "";
         // check logged ?
         Boolean hasAccount =  hasAccount();
         if(!hasAccount){
-            profile.setOnClickListener(new View.OnClickListener() {
+            // module sẽ bị ẩn đi khi chưa đăng nhập
+            mySongs.setVisibility(View.GONE);
+            favoriteSongs.setVisibility(View.GONE);
+            signInPlease.setVisibility(View.VISIBLE);
+            tv_signIn_out.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent toAccountActivity = new Intent(getActivity(), AccountActivity.class);
@@ -85,30 +109,23 @@ public class AccountFragment extends Fragment {
             SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
             String display_name = prefs.getString("display_name", "profile");//"No name defined" is the default value.
             String avatar = prefs.getString("avatar","avatar"); //0 is the default value.
+            account_id = prefs.getString("union_id","union_id");
+            // change text
             profile.setText(display_name);
+            tv_signIn_out.setText("Đăng xuất");
+            imv_signIn_out.setImageResource(R.drawable.sign_out);
             new DownloadImageTask(view.findViewById(R.id.profile_avatar))
                     .execute(avatar);
             // check logout
-            profile.setOnClickListener(new View.OnClickListener() {
+            tv_signIn_out.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     CustomDialog customDialog = new CustomDialog(getContext());
                     customDialog.show();
                 }
             });
+
         }
-
-
-        mySong = view.findViewById(R.id.mySong);
-        mySong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("playlist", 1);
-                startActivity(intent);
-            }
-        });
-        database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Playlist");
         listPlaylist = view.findViewById(R.id.listPlaylist);
         listPlaylist.setLayoutManager(new LinearLayoutManager(getActivity()));
         arrPlaylist = new ArrayList<>();
@@ -118,7 +135,7 @@ public class AccountFragment extends Fragment {
                 onClickDeleteData(playlist);
             }
         });
-
+        showdata(account_id);
         listPlaylist.setAdapter(myAdapter);
         return view;
     }
@@ -132,6 +149,7 @@ public class AccountFragment extends Fragment {
     }
     public void showdata(String account_id)
     {
+        database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Playlist");
         database.orderByChild("account_id").equalTo(account_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -243,7 +261,6 @@ public class AccountFragment extends Fragment {
         });
         dialog.show();
     }
-
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> { // class lấy link avatar từ profile huawei convert to bitmap và hiển thị trên imageview
