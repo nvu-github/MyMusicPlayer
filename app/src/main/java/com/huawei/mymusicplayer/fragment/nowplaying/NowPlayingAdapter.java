@@ -91,15 +91,10 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         viewholder.mArtistName.setText(songBean.getSinger());
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
-//        viewholder.menu_song.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ShowMenu();
-//            }
-//        });
 
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
+
 //    private void ShowMenu(){
 //        PopupMenu popupMenu = new PopupMenu();
 //        popupMenu.inflate(R.menu.menu);

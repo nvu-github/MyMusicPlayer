@@ -48,8 +48,8 @@ public class AccountActivity extends AppCompatActivity {
                 btnHuaweiLogin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //silentSignInByHwId();
-                        signInCode();
+                        silentSignInByHwId();
+                        //signInCode();
                         Log.i(TAG, "signInCode: 0");
 
                     }
@@ -59,8 +59,8 @@ public class AccountActivity extends AppCompatActivity {
             btnHuaweiLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //silentSignInByHwId();
-                    signInCode();
+                    silentSignInByHwId();
+                    //signInCode();
                     Log.i(TAG, "signInCode: 1");
 
                 }
@@ -96,6 +96,8 @@ public class AccountActivity extends AppCompatActivity {
 
         // Use AccountAuthParams to build AccountAuthService.
         mAuthService = AccountAuthManager.getService(this, mAuthParam);
+        Log.i(TAG, "object login: " + mAuthService);
+
 
         // Use silent sign-in to sign in with a HUAWEI ID.
         Task<AuthAccount> task = mAuthService.silentSignIn();
@@ -146,7 +148,6 @@ public class AccountActivity extends AppCompatActivity {
         Intent toLayoutMain = new Intent(this,LayoutMain.class);
         startActivity(toLayoutMain);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -177,7 +178,6 @@ public class AccountActivity extends AppCompatActivity {
             }
         }
     }
-
     private void signOut() {
         SharedPreferences.Editor editor = getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE).edit();
        if(mAuthService != null){

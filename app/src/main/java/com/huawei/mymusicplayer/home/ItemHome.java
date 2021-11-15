@@ -3,13 +3,13 @@ package com.huawei.mymusicplayer.home;
 import java.io.Serializable;
 
 public class ItemHome implements Serializable {
-    private int key;
+    private String key;
     private int resoucerid;
     private String title;
     private int type;
     private boolean isFeatured;
 
-    public ItemHome(int key, int resoucerid, String title, int type, boolean isFeatured) {
+    public ItemHome(String key, int resoucerid, String title, int type, boolean isFeatured) {
         this.key = key;
         this.resoucerid = resoucerid;
         this.title = title;
@@ -17,11 +17,11 @@ public class ItemHome implements Serializable {
         this.isFeatured = isFeatured;
     }
 
-    public int getKey() {
+    public String getKey() {
         return key;
     }
 
-    public void setKey(int key) {
+    public void setKey(String key) {
         this.key = key;
     }
 

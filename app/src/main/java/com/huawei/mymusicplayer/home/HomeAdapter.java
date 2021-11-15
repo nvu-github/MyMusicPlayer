@@ -63,11 +63,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             homeViewHolder.mCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (itemHome.getType() == 1){
-                        changeintent(itemHome);
-                    } else if (itemHome.getType() == 3) {
-                        Toast.makeText(mContext, "type2 " + itemHome.getType(), Toast.LENGTH_SHORT).show();
-                    }
+                    changeintent(itemHome);
                 }
             });
         } else if (TYPE_HOME2_FEATURED == holder.getItemViewType()){
@@ -86,7 +82,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private void changeintent(ItemHome itemHome){
         Intent intent = new Intent(mContext, MainActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("object",itemHome);
+        bundle.putSerializable("typeHome",itemHome);
+//        if (itemHome.getType() == 1){
+//            bundle.putSerializable("id",itemHome.getKey());
+//        } else if (itemHome.getType() == 2) {
+//            bundle.putSerializable("casi",itemHome.getTitle());
+//        } else {
+//            bundle.putSerializable("idcategory",itemHome.getKey());
+//        }
         intent.putExtras(bundle);
         mContext.startActivity(intent);
     }

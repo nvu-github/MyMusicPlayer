@@ -27,7 +27,7 @@ import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
 import com.huawei.mymusicplayer.home.ItemHome;
 import com.huawei.mymusicplayer.home.ItemSongHome;
-import com.huawei.mymusicplayer.ui.seek.SeekBarFragment;
+import com.huawei.mymusicplayer.fragment.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -122,29 +122,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("songs");
 
-        Bundle bundle = getIntent().getExtras();
-        String album, idsearch;
+        Bundle bundle   = getIntent().getExtras();
+        String album    = "";
+        String idsearch = "";
+        int type     = 0;
+        String idHome   = "";
 
         if (bundle == null){
             return;
         }else if(bundle.getString("album") != null){
             album       = bundle.getString("album").toLowerCase();
-            idsearch    = "";
-            getdataFirebase(album, idsearch);
+            getdataFirebase(album, idsearch, type, idHome);
         } else if (bundle.getString("idbaihat") != null) {
             idsearch    = bundle.getString("idbaihat").toLowerCase();
-            album       = "";
-            getdataFirebase(album, idsearch);
+            getdataFirebase(album, idsearch, type, idHome);
         } else {
-            album       = "";
-            idsearch    = "";
-            getdataFirebase(album, idsearch);
+            ItemHome item = (ItemHome) bundle.getSerializable("typeHome");
+            type          = item.getType();
+            if (type == 2){
+                idHome = item.getTitle().toLowerCase();
+            } else {
+                idHome        = item.getKey();
+            }
+
+            getdataFirebase(album, idsearch, type, idHome);
         }
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
     }
 
-    public void getdataFirebase(String album, String id){
+    public void getdataFirebase(String album, String id, int type, String idHome){
+
         List<Song> songList = new ArrayList<>();
         databaseSongs.addValueEventListener(new ValueEventListener() {
             @Override
@@ -157,7 +165,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (id != null && id.equals(song.getId().toLowerCase())) {
                         songList.add(song);
                     } else if ( id == "" && album == "") {
-                        songList.add(song);
+                        if (type == 1 && idHome.equals(song.getId().toLowerCase())){
+                            songList.add(song);
+                        } else if (type == 2 && idHome.equals(song.getArtist().toLowerCase())) {
+                            songList.add(song);
+                        } else if (type == 3 && idHome.equals(song.getCategory().toLowerCase())){
+                            songList.add(song);
+                        }
                     }
                 }
                 PlayHelper.getInstance().buildOnlineList(songList);
