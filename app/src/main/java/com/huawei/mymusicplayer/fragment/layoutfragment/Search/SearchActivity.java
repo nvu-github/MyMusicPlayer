@@ -8,11 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.huawei.mymusicplayer.R;
-import com.huawei.mymusicplayer.Song;
-import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.model.Song;
 
 import java.util.ArrayList;
 import java.util.List;

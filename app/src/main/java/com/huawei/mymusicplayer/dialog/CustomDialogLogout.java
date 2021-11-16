@@ -16,11 +16,11 @@ import com.huawei.mymusicplayer.R;
 import com.huawei.mymusicplayer.account.AccountActivity;
 import com.huawei.mymusicplayer.fragment.layoutfragment.AccountFragment;
 
-public class CustomDialog extends Dialog {
+public class CustomDialogLogout extends Dialog {
     public static final String TAG = "DialogLogout";
     public Context context;
     private Button btn_dialog_logout, btn_dialog_cancel;
-    public CustomDialog(Context context) {
+    public CustomDialogLogout(Context context) {
         super(context);
         this.context = context;
     }

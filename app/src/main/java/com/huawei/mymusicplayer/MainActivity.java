@@ -33,6 +33,8 @@ import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
 import com.huawei.mymusicplayer.home.ItemHome;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.fragment.seek.SeekBarFragment;
+import com.huawei.mymusicplayer.model.FavoriteSong;
+import com.huawei.mymusicplayer.model.Song;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mSongName;
     private CircleImageView mCircleImageView;
     private ImageView mImgback;
-    DatabaseReference databaseSongs;
+    DatabaseReference databaseSongs, databaseFavoriteSong;
 
 
     private HwAudioStatusListener mPlayListener = new HwAudioStatusListener() {
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String idsearch = "";
         int type     = 0;
         String idHome   = "";
-
+        String status = "";
         if (bundle == null){
             return;
         }else if(bundle.getString("album") != null){
@@ -144,8 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             getdataFirebase(album, idsearch, type, idHome);
         } else if(bundle.getString("status") != null && bundle.getString("status").equals("love_song") == true) {
             getLoveSong();
-        }
-        else{
+        } else if(bundle.getString("songID")!= null && bundle.getString("status").equals("favorite_song")){
+            Log.i(TAG, "onCreate: if");
+
+            getFavoriteSong();
+        }else {
             ItemHome item = (ItemHome) bundle.getSerializable("typeHome");
             type          = item.getType();
             if (type == 2){
@@ -156,13 +161,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             getdataFirebase(album, idsearch, type, idHome);
         }
-//        getLoveSong();
+
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
     }
 
-    public void getdataFirebase(String album, String id, int type, String idHome){
+    private  void getFavoriteSong(){
+        Log.i(TAG, "onCreate: getfavortite song");
 
+        Bundle bundle   = getIntent().getExtras();
+        String songID = bundle.getString("songID");
+        List<Song> favoriteSongs = new ArrayList<>();
+        databaseFavoriteSong = FirebaseDatabase
+                .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("favorite_song");
+        databaseFavoriteSong.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                favoriteSongs.clear();
+                for (DataSnapshot songSnapshot : snapshot.getChildren()){
+                    FavoriteSong favoriteSong = songSnapshot.getValue(FavoriteSong.class);
+                    Song song = new Song(favoriteSong.getId(), favoriteSong.getName(), "demo", "demo", "demo", favoriteSong.getUrl());
+                    Log.i(TAG, "song model: "+song.getLink());
+                   favoriteSongs.add(song);
+                }
+                PlayHelper.getInstance().buildOnlineList(favoriteSongs);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getdataFirebase(String album, String id, int type, String idHome){
         List<Song> songList = new ArrayList<>();
         databaseSongs.addValueEventListener(new ValueEventListener() {
             @Override

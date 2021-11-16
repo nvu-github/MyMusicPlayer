@@ -27,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
-import com.huawei.mymusicplayer.Song;
 import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 

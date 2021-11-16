@@ -1,4 +1,4 @@
-package com.huawei.mymusicplayer;
+package com.huawei.mymusicplayer.model;
 
 public class Song {
     private String id;
