@@ -49,6 +49,9 @@ public class AccountActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         silentSignInByHwId();
+                        //signInCode();
+                        Log.i(TAG, "signInCode: 0");
+
                     }
                 });
             }
@@ -57,6 +60,9 @@ public class AccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     silentSignInByHwId();
+                    //signInCode();
+                    Log.i(TAG, "signInCode: 1");
+
                 }
             });
         }
@@ -68,6 +74,18 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void signInCode() {
+        Log.i(TAG, "signInCode: shit");
+        mAuthParam = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM)
+                .setProfile()
+                .setAuthorizationCode()
+                .createParams();
+        mAuthService = AccountAuthManager.getService(AccountActivity.this, mAuthParam);
+        Log.i(TAG, "authService: "+mAuthService);
+        startActivityForResult(mAuthService.getSignInIntent(), Constant.REQUEST_SIGN_IN_LOGIN_CODE);
+    }
+
     private  void silentSignInByHwId() {
         // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
         // 2. By default, DEFAULT_AUTH_REQUEST_PARAM specifies two items to be obtained, that is, the user ID and profile.
@@ -130,10 +148,39 @@ public class AccountActivity extends AppCompatActivity {
         Intent toLayoutMain = new Intent(this,LayoutMain.class);
         startActivity(toLayoutMain);
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUEST_SIGN_IN_LOGIN) {
+            //login success
+            //get user message by parseAuthResultFromIntent
+            Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(data);
+            if (authAccountTask.isSuccessful()) {
+                AuthAccount authAccount = authAccountTask.getResult();
+                Log.i(TAG, authAccount.getDisplayName() + " signIn success ");
+                Log.i(TAG, "AccessToken: " + authAccount.getAccessToken());
+            } else {
+                Log.i(TAG, "signIn failed: " + ((ApiException) authAccountTask.getException()).getStatusCode());
+            }
+        }
+        if (requestCode == Constant.REQUEST_SIGN_IN_LOGIN_CODE) {
+            //login success
+            Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(data);
+            if (authAccountTask.isSuccessful()) {
+                AuthAccount authAccount = authAccountTask.getResult();
+                Log.i(TAG, "signIn get code success.");
+                Log.i(TAG, "ServerAuthCode: " + authAccount.getAuthorizationCode());
+                dealWithResultOfSignIn(authAccount);
+                /**** english doc:For security reasons, the operation of changing the code to an AT must be performed on your server. The code is only an example and cannot be run. ****/
+                /**********************************************************************************************/
+            } else {
+                Log.i(TAG, "signIn get code failed: " + ((ApiException) authAccountTask.getException()).getStatusCode());
+            }
+        }
+    }
     private void signOut() {
         SharedPreferences.Editor editor = getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE).edit();
-        if(mAuthService != null){
+       if(mAuthService != null){
            Task<Void> signOutTask = mAuthService.signOut();
            signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
                @Override
