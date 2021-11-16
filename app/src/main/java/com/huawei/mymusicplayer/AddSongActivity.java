@@ -98,9 +98,6 @@ public class AddSongActivity extends AppCompatActivity {
                         startActivity(toMainActivity);
                     }
                 });
-
-
-
             }
         });
     }
