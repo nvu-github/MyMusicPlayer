@@ -1,5 +1,9 @@
 package com.huawei.mymusicplayer;
 
+import static com.huawei.mymusicplayer.account.AccountActivity.PROFILE_INFORMATION;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +27,7 @@ import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
 import com.huawei.mymusicplayer.home.ItemHome;
@@ -37,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -138,12 +144,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (bundle.getString("idbaihat") != null) {
             idsearch    = bundle.getString("idbaihat").toLowerCase();
             getdataFirebase(album, idsearch, type, idHome);
+        } else if(bundle.getString("status") != null && bundle.getString("status").equals("love_song") == true) {
+            getLoveSong();
         } else if(bundle.getString("songID")!= null && bundle.getString("status").equals("favorite_song")){
             Log.i(TAG, "onCreate: if");
 
             getFavoriteSong();
         }else {
-            Log.i(TAG, "onCreate: else");
             ItemHome item = (ItemHome) bundle.getSerializable("typeHome");
             type          = item.getType();
             if (type == 2){
@@ -154,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             getdataFirebase(album, idsearch, type, idHome);
         }
-        Log.i(TAG, "onCreate: always");
+
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
     }
@@ -291,6 +298,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void getLoveSong()
+    {
+        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
+        SharedPreferences prefs = this.getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String account_id = prefs.getString("union_id","union_id");
+        List<LoveSong> arrLoveSong = new ArrayList<>();
+        databaseSongs.orderByChild("userID").equalTo(account_id).addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot snapshot) {
+             for (DataSnapshot lovesong : snapshot.getChildren()){
+                  LoveSong song = lovesong.getValue(LoveSong.class);
+                  arrLoveSong.add(song);
+             }
+             List<Song> targetLoveSongs = new ArrayList<>();
+             DatabaseReference database;
+             database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("songs");
+             database.addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                     for (DataSnapshot informationSong : snapshot.getChildren()){
+                         Song song = informationSong.getValue(Song.class);
+                         for(LoveSong compareSong : arrLoveSong){
+                             if(song.getId().equals(compareSong.getSongID()))
+                             {
+                                 targetLoveSongs.add(song);
+                             }
+                         }
+                     }
+                     PlayHelper.getInstance().buildOnlineList(targetLoveSongs);
+                 }
+
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError error) {
+
+                 }
+             });
+
+         }
+
+
+         @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+    }
+
+
 //    private void showMenuDialog() {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setItems(R.array.menu_items, new DialogInterface.OnClickListener() {
@@ -318,25 +373,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        builder.create().show();
 //    }
 
-//    private List<ItemSongHome> databaseProcessing(int key){
-////        create database
-//        database = new Database(this);
-////        create table
-//        database.QueryData("CREATE TABLE IF NOT EXISTS CaSi(Id INTEGER PRIMARY KEY, AudioTitle VARCHAR(255), AudioId VARCHAR(255), FilePath VARCHAR(255), Singer VARCHAR(255), TypeCaSi INTEGER) ");
-////        insert data
-////        database.QueryData("INSERT INTO CaSi VALUES(1,'Trên tình bạn dưới tình yêu','upfriendshipdownlove','hms_res://upfriendshipdownlove','Min',1)");
-////        database.QueryData("INSERT INTO CaSi VALUES(2,'Đi đu đưa đi','diduduadi','hms_res://diduduadi','Bích Phương',2)");
-//        Cursor getData = database.GetData("SELECT * FROM CaSi WHERE TypeCaSi = " + key);
-//
-//        List<ItemSongHome> itemSongHomes = new ArrayList<>();
-////        while (getData.moveToNext()){
-////            String title        = getData.getString(1);
-////            String audioId      = getData.getString(2);
-////            String url          = getData.getString(3);
-////            String singername   = getData.getString(4);
-////            itemSongHomes.add(new ItemSongHome(title,audioId,url,singername));
-//////            Toast.makeText(this, "Name: "+title + ", Url: "+url + ", singername: "+singername , Toast.LENGTH_LONG).show();
-////        }
-//        return itemSongHomes;
-//    }
 }

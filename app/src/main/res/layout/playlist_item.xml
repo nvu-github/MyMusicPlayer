@@ -19,21 +19,24 @@
         android:layout_marginTop="10dp"
         android:textSize="15dp"
         android:textColor="@color/black"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"/>
-
     <ImageView
-        android:id="@+id/delete_playlist"
-        android:layout_marginTop="30dp"
+        android:id="@+id/edit_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:src="@drawable/ic_delete"/>
+        android:src="@drawable/ic_baseline_edit_24" />
 
-    <!--    <ImageView-->
-<!--        -->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_delete" />-->
+    <ImageView
+        android:id="@+id/delete_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_delete" />
+
+
+
+
 
 </LinearLayout>

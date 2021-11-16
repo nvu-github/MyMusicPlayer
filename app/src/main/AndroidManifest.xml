@@ -15,6 +15,11 @@
             <action android:name="com.huawei.hms.core.aidlservice" />
         </intent>
     </queries>
+    <queries>
+        <intent>
+            <action android:name="com.huawei.hms.core.aidlservice" />
+        </intent>
+    </queries>
 
     <application
         android:name=".MyApplication"
@@ -29,7 +34,7 @@
             android:exported="true" />
         <activity
             android:name=".fragment.layoutfragment.Search.SearchActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".AddSongActivity"
             android:exported="true" />
@@ -47,8 +52,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LayoutMain" />
         <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="com.huawei.hms.client.channel.androidMarket"
+            android:value="false" />
     </application>
 
 </manifest>
