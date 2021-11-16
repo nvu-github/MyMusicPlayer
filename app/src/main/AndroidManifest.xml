@@ -30,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMusicPlayer">
         <activity
+            android:name=".loveSong"
+            android:exported="true" />
+        <activity
             android:name=".account.AccountActivity"
             android:exported="true" />
         <activity
@@ -52,7 +55,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".LayoutMain" />
         <activity android:name=".MainActivity" />
 

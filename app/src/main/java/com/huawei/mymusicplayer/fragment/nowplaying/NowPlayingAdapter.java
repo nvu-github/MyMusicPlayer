@@ -17,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,9 +34,12 @@ import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
+    private ImageView song;
+    private DatabaseReference database;
 
     private static class ViewHolder {
 
@@ -92,6 +98,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.mArtistName = ViewUtils.findViewById(contentView, R.id.line2);
             viewholder.lineImage = ViewUtils.findViewById(contentView, R.id.simple_line);
             viewholder.love_song = ViewUtils.findViewById(contentView, R.id.love_song);
+            song = viewholder.love_song;
 
             contentView.setTag(viewholder);
         }
@@ -105,43 +112,34 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         viewholder.mArtistName.setText(songBean.getSinger());
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
-
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "0");
         if (userID != "0") {
             viewholder.love_song.setVisibility(View.VISIBLE);
             viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
+            database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
+            database.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<String> mylist = new ArrayList<String>();
+                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
+                        LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
+                        mylist.add(lovesong.getName().toLowerCase());
+                    }
 
-//            database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
-//            database.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    Log.i("test_snapshot", snapshot.toString());
-//                    List<LoveSong> songList = new ArrayList<>();
-//                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
-//                        LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
-//                        if(lovesong.getSongID().equals(songBean.getAudioId())){
-//                            songList.add(lovesong);
-//                        }
-//                        if(lovesong.getSongID().equals(songBean.getAudioId())){
-//                            Log.i("TAG", "onDataChange1");
-//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
-//                        }else{
-//                            Log.i("TAG", "onDataChange2");
-//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-//                        }
-//                    }
-//                    Log.i("TAG", "onDataChange: " + songList.size());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
+                    if (mylist.contains(songBean.getAudioTitle().toLowerCase())) {
+                        viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    } else {
+                        viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
-
-
 
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
@@ -151,6 +149,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         int pos;
         HwAudioPlayItem songBean;
         private DatabaseReference database_song;
+
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "union_id");
 
@@ -162,9 +161,37 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         @Override
         public void onClick(View v) {
             database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
-            String key = database_song.push().getKey();
-            LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
-            database_song.child(key).setValue(loveSong);
+            database_song.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<String> mylist = new ArrayList<String>();
+                    String id = "";
+                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
+                        LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
+                        mylist.add(lovesong.getName().toLowerCase());
+
+                        if (lovesong.getName().toLowerCase().equals(songBean.getAudioTitle().toLowerCase())){
+                            id = lovesong.getId();
+                        }
+                    }
+                    if (!mylist.contains(songBean.getAudioTitle().toLowerCase())) {
+                        String key = database_song.push().getKey();
+                        LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
+                        database_song.child(key).setValue(loveSong).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(getContext(), "Thêm bài hát vào danh sách yêu thích thành công", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 }

@@ -47,6 +47,7 @@ import com.huawei.mymusicplayer.R;
 import com.huawei.mymusicplayer.account.AccountActivity;
 
 import com.huawei.mymusicplayer.dialog.CustomDialogLogout;
+import com.huawei.mymusicplayer.loveSong;
 
 
 import java.io.InputStream;
@@ -84,8 +85,7 @@ public class AccountFragment extends Fragment{
         favorite_song.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("status", "love_song");
+                Intent intent = new Intent(getActivity(), loveSong.class);
                 startActivity(intent);
             }
         });
@@ -153,7 +153,6 @@ public class AccountFragment extends Fragment{
                 onClickDeleteData(playlist);
             }
         });
-        showdata(account_id);
         listPlaylist.setAdapter(myAdapter);
         showdata(account_id);
         return view;
