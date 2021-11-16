@@ -3,25 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
-=======
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_account.xml" value="0.264" />
-<<<<<<< HEAD
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_add_song.xml" value="0.27447916666666666" />
->>>>>>> 7a65c9ef991e1491a176baa6d8c8566bed65926f
-=======
->>>>>>> d7e7d6a88aafcd77a26e21eadfb198b844a94866
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_layout_main.xml" value="0.1793478260869565" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_login_huawei.xml" value="0.1793478260869565" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_add.xml" value="0.13697916666666668" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_add_song.xml" value="0.25271739130434784" />
-=======
->>>>>>> d7e7d6a88aafcd77a26e21eadfb198b844a94866
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_logout.xml" value="0.2" />
->>>>>>> 7a65c9ef991e1491a176baa6d8c8566bed65926f
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_account.xml" value="0.264" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_home.xml" value="0.2572463768115942" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_list.xml" value="0.2572463768115942" />
@@ -40,7 +26,7 @@
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/dialog_logout.xml" value="0.25" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/item_searchview.xml" value="0.264" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/nowplaying_content.xml" value="0.2557272242940863" />
-        <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/simple_song_list_item.xml" value="0.1" />
+        <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/simple_song_list_item.xml" value="0.2" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/song_list_layout.xml" value="0.161231884057971" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/statusbar.xml" value="0.12708333333333333" />
         <entry key="..\:/btl_android/app/src/main/res/layout/activity_add_song.xml" value="0.264" />
@@ -59,29 +45,15 @@
         <entry key="..\:/btl_android/app/src/main/res/layout/list_song_layout.xml" value="0.1793478260869565" />
         <entry key="..\:/btl_android/app/src/main/res/layout/playlist_item.xml" value="0.27447916666666666" />
         <entry key="..\:/btl_android/app/src/main/res/layout/song_list_layout.xml" value="0.2" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.21614583333333334" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_delete.xml" value="0.21927083333333333" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_more.xml" value="0.22395833333333334" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/drawable/ic_red_favorite.xml" value="0.21614583333333334" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_account.xml" value="0.23854166666666668" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_layout_main.xml" value="0.2203125" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_playlist_add.xml" value="0.1175925925925926" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_playlist_add2.xml" value="0.23854166666666668" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/activity_tesr.xml" value="0.103596757852077" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/add_playlist.xml" value="0.23854166666666668" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/dialog_add.xml" value="0.16304347826086957" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/dialog_edit.xml" value="0.2328125" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/dialog_logout.xml" value="0.23854166666666668" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/fragment_account.xml" value="0.2" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/item_add.xml" value="0.23854166666666668" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/item_home.xml" value="0.2078125" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/nowplaying_content.xml" value="0.2" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/playlist_item.xml" value="0.2" />
+        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/playlist_item.xml" value="0.264" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/simple_song_list_item.xml" value="0.2078125" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/layout/song_list_layout.xml" value="0.2078125" />
         <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/menu/menu.xml" value="0.2078125" />
-        <entry key="..\:/btlandroid/MyMusicPlayer/app/src/main/res/menu/menu_bottom.xml" value="0.2171875" />
       </map>
     </option>
   </component>
