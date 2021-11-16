@@ -19,12 +19,11 @@ import com.huawei.hms.audiokit.player.manager.HwAudioPlayerConfig;
 import com.huawei.hms.audiokit.player.manager.HwAudioPlayerManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioQueueManager;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
-import com.huawei.mymusicplayer.Song;
+import com.huawei.mymusicplayer.model.FavoriteSong;
+import com.huawei.mymusicplayer.model.Song;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.listsong.SampleData;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -160,7 +159,12 @@ public class PlayHelper {
         Log.i(TAG, "buildOnlineList");
         List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist(songs);
         if (mHwAudioPlayerManager != null) {
+            Log.i(TAG, "buildOnlineList true");
+
             mHwAudioPlayerManager.playList(playItemList, 0, 0);
+        }else{
+            Log.i(TAG, "buildOnlineList fail");
+
         }
     }
     public void setPlayMode(int mode) {

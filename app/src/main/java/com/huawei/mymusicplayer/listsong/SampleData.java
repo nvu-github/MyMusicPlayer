@@ -6,25 +6,19 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
-import com.huawei.mymusicplayer.Song;
+import com.huawei.mymusicplayer.model.FavoriteSong;
+import com.huawei.mymusicplayer.model.Song;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 
 
 public class SampleData {
@@ -44,7 +38,6 @@ public class SampleData {
         Log.i(TAG, "getOnlinePlaylist: "+songs.toString());
         return playItemList;
     }
-
     public List<HwAudioPlayItem> getLocalPlayList(Context context, List<ItemSongHome> itemSongHomes) {
         List<HwAudioPlayItem> playItemList = new ArrayList<>();
         Cursor cursor = null;
