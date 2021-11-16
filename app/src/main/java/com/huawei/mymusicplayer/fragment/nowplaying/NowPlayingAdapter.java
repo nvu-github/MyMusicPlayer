@@ -91,7 +91,6 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         viewholder.mArtistName.setText(songBean.getSinger());
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
-
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
 
