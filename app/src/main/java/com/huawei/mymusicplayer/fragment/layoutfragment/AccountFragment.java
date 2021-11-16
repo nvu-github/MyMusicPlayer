@@ -39,16 +39,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.huawei.mymusicplayer.AddSongActivity;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
-
 import com.huawei.mymusicplayer.account.AccountActivity;
 
-
-import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.dialog.CustomDialogLogout;
+
 
 import java.io.InputStream;
 import java.util.ArrayList;

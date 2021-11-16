@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
-    private ImageView song;
-    private DatabaseReference database;
 
     private static class ViewHolder {
 
@@ -94,7 +92,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.mArtistName = ViewUtils.findViewById(contentView, R.id.line2);
             viewholder.lineImage = ViewUtils.findViewById(contentView, R.id.simple_line);
             viewholder.love_song = ViewUtils.findViewById(contentView, R.id.love_song);
-            song = viewholder.love_song;
+
             contentView.setTag(viewholder);
         }
         return contentView;
@@ -113,6 +111,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         if (userID != "0") {
             viewholder.love_song.setVisibility(View.VISIBLE);
             viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
+
 //            database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
 //            database.addValueEventListener(new ValueEventListener() {
 //                @Override
@@ -154,7 +153,6 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         private DatabaseReference database_song;
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "union_id");
-        Boolean click = false;
 
         OptionViewClick(int pos, HwAudioPlayItem songBean) {
             this.pos = pos;
@@ -163,7 +161,6 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
         @Override
         public void onClick(View v) {
-            click = true;
             database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
             String key = database_song.push().getKey();
             LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
