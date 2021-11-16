@@ -5,6 +5,7 @@ public class FavoriteSong {
 
     private String id;
     private String name;
+    private String artist;
     private String url;
     private String userID;
 
@@ -12,9 +13,18 @@ public class FavoriteSong {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public FavoriteSong(String id, String name, String url, String userID) {
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public FavoriteSong(String id, String name, String artist, String url, String userID) {
         this.id = id;
         this.name = name;
+        this.artist = artist;
         this.url = url;
         this.userID = userID;
     }

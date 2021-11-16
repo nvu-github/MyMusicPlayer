@@ -23,7 +23,7 @@ public class CustomDialogAddSong extends Dialog {
     public static final String TAG = "DialogAddSong";
     public static final String PROFILE_INFORMATION = "profile";
     public Context context;
-    private EditText ed_nameSong, ed_urlSong;
+    private EditText ed_nameSong, ed_urlSong, ed_artist;
     private Button btn_dialog_add, btn_dialog_cancel;
     private String userID = "";
 
@@ -41,6 +41,7 @@ public class CustomDialogAddSong extends Dialog {
 
         this.ed_nameSong = (EditText)findViewById(R.id.ed_nameSong);
         this.ed_urlSong = (EditText)findViewById(R.id.ed_urlSong);
+        this.ed_artist = (EditText)findViewById(R.id.ed_artist);
 
         this.btn_dialog_add = findViewById(R.id.btn_dialog_add_song);
         this.btn_dialog_cancel = findViewById(R.id.btn_dialog_cancel);
@@ -64,12 +65,13 @@ public class CustomDialogAddSong extends Dialog {
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         userID = prefs.getString("union_id","union_id");
         String nameSong  = this.ed_nameSong.getText().toString();
+        String artistSong = this.ed_artist.getText().toString();
         String urlSong = this.ed_urlSong.getText().toString();
         if (userID != "") {
             databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("favorite_song");
             int randomNum = ThreadLocalRandom.current().nextInt(1, 99999 + 1);
             String id = String.valueOf(randomNum);
-            FavoriteSong favoriteSong = new FavoriteSong(id, nameSong, urlSong, userID);
+            FavoriteSong favoriteSong = new FavoriteSong(id, nameSong, artistSong, urlSong, userID);
             databaseSongs.child(id).setValue(favoriteSong);
         }
     }
