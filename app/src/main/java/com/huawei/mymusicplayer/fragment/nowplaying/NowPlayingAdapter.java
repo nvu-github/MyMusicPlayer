@@ -48,6 +48,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
         private View lineImage = null;
     }
+
     private int listItemMargin;
 
     //    private static class DeleteViewClickListener implements View.OnClickListener {
@@ -108,14 +109,11 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
 
-
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "0");
-        if(userID != "0")
-        {
+        if (userID != "0") {
             viewholder.love_song.setVisibility(View.VISIBLE);
             viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
-
 //            database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
 //            database.addValueEventListener(new ValueEventListener() {
 //                @Override
@@ -127,16 +125,15 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 //                        if(lovesong.getSongID().equals(songBean.getAudioId())){
 //                            songList.add(lovesong);
 //                        }
-////                        if(lovesong.getSongID().equals(songBean.getAudioId())){
-////                            Log.i("TAG", "onDataChange1");
-////                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
-////                        }else{
-////                            Log.i("TAG", "onDataChange2");
-////                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-////                        }
+//                        if(lovesong.getSongID().equals(songBean.getAudioId())){
+//                            Log.i("TAG", "onDataChange1");
+//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                        }else{
+//                            Log.i("TAG", "onDataChange2");
+//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+//                        }
 //                    }
 //                    Log.i("TAG", "onDataChange: " + songList.size());
-////                    Toast.makeText(getContext(), "Đã thêm vào bài hát yêu thích", Toast.LENGTH_SHORT).show();
 //                }
 //
 //                @Override
@@ -146,57 +143,32 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 //            });
         }
 
+
+
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
-    private static class OptionViewClick implements View.OnClickListener{
+
+
+    private static class OptionViewClick implements View.OnClickListener {
         int pos;
         HwAudioPlayItem songBean;
         private DatabaseReference database_song;
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "union_id");
         Boolean click = false;
-        OptionViewClick(int pos,  HwAudioPlayItem songBean) {
+
+        OptionViewClick(int pos, HwAudioPlayItem songBean) {
             this.pos = pos;
             this.songBean = songBean;
         }
+
         @Override
         public void onClick(View v) {
             click = true;
             database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
             String key = database_song.push().getKey();
-            LoveSong loveSong = new LoveSong(songBean.getSinger(),songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
+            LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
             database_song.child(key).setValue(loveSong);
-//            Toast.makeText(v.getContext(), "them database", Toast.LENGTH_SHORT).show();
-
-//            database_song.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if(click == true)
-//                    {
-//                        LoveSong loveSong = snapshot.getValue(LoveSong.class);
-//                        songArrayList.add(loveSong);
-////                        if(snapshot.hasChild(songID) && snapshot.hasChild(userID))
-////                            {
-//////                                love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
-////    //                            database.child(songID).hasChild(userID).removeValue();
-////    //                            click = false;
-////                                Toast.makeText(getContext(), "yeu thich", Toast.LENGTH_SHORT).show();
-////                            }else{
-//////                                love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-////    //                            database.child(songID).hasChild(userID).setValue(true);
-////    //                            click = false;
-////                                Toast.makeText(getContext(), "khong yeu thich", Toast.LENGTH_SHORT).show();
-////                            }
-//                    }
-//
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-
         }
     }
-
 }

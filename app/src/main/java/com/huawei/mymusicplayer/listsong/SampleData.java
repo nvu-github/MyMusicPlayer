@@ -26,7 +26,6 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 
-//import static com.huawei.mymusicplayer.AccountActivity.TAG;
 
 public class SampleData {
     DatabaseReference databaseSongs;

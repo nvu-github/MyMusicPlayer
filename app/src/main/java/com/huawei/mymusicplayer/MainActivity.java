@@ -1,5 +1,9 @@
 package com.huawei.mymusicplayer;
 
+import static com.huawei.mymusicplayer.account.AccountActivity.PROFILE_INFORMATION;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +27,12 @@ import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
 import com.huawei.mymusicplayer.home.ItemHome;
 import com.huawei.mymusicplayer.home.ItemSongHome;
-import com.huawei.mymusicplayer.ui.seek.SeekBarFragment;
+import com.huawei.mymusicplayer.fragment.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -122,29 +128,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("songs");
 
-        Bundle bundle = getIntent().getExtras();
-        String album, idsearch;
+        Bundle bundle   = getIntent().getExtras();
+        String album    = "";
+        String idsearch = "";
+        int type     = 0;
+        String idHome   = "";
 
         if (bundle == null){
             return;
         }else if(bundle.getString("album") != null){
             album       = bundle.getString("album").toLowerCase();
-            idsearch    = "";
-            getdataFirebase(album, idsearch);
+            getdataFirebase(album, idsearch, type, idHome);
         } else if (bundle.getString("idbaihat") != null) {
             idsearch    = bundle.getString("idbaihat").toLowerCase();
-            album       = "";
-            getdataFirebase(album, idsearch);
-        } else {
-            album       = "";
-            idsearch    = "";
-            getdataFirebase(album, idsearch);
+            getdataFirebase(album, idsearch, type, idHome);
+        } else if(bundle.getString("status") != null && bundle.getString("status").equals("love_song") == true) {
+            getLoveSong();
         }
+        else{
+            ItemHome item = (ItemHome) bundle.getSerializable("typeHome");
+            type          = item.getType();
+            if (type == 2){
+                idHome = item.getTitle().toLowerCase();
+            } else {
+                idHome        = item.getKey();
+            }
+
+            getdataFirebase(album, idsearch, type, idHome);
+        }
+//        getLoveSong();
         PlayHelper.getInstance().addListener(mPlayListener);
         initViews();
     }
 
-    public void getdataFirebase(String album, String id){
+    public void getdataFirebase(String album, String id, int type, String idHome){
+
         List<Song> songList = new ArrayList<>();
         databaseSongs.addValueEventListener(new ValueEventListener() {
             @Override
@@ -157,7 +175,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else if (id != null && id.equals(song.getId().toLowerCase())) {
                         songList.add(song);
                     } else if ( id == "" && album == "") {
-                        songList.add(song);
+                        if (type == 1 && idHome.equals(song.getId().toLowerCase())){
+                            songList.add(song);
+                        } else if (type == 2 && idHome.equals(song.getArtist().toLowerCase())) {
+                            songList.add(song);
+                        } else if (type == 3 && idHome.equals(song.getCategory().toLowerCase())){
+                            songList.add(song);
+                        }
                     }
                 }
                 PlayHelper.getInstance().buildOnlineList(songList);
@@ -242,6 +266,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void getLoveSong()
+    {
+        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
+        SharedPreferences prefs = this.getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String account_id = prefs.getString("union_id","union_id");
+        List<LoveSong> arrLoveSong = new ArrayList<>();
+        databaseSongs.orderByChild("userID").equalTo(account_id).addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot snapshot) {
+             for (DataSnapshot lovesong : snapshot.getChildren()){
+                  LoveSong song = lovesong.getValue(LoveSong.class);
+                  arrLoveSong.add(song);
+             }
+             List<Song> targetLoveSongs = new ArrayList<>();
+             DatabaseReference database;
+             database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("songs");
+             database.addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                     for (DataSnapshot informationSong : snapshot.getChildren()){
+                         Song song = informationSong.getValue(Song.class);
+                         for(LoveSong compareSong : arrLoveSong){
+                             if(song.getId().equals(compareSong.getSongID()))
+                             {
+                                 targetLoveSongs.add(song);
+                             }
+                         }
+                     }
+                     PlayHelper.getInstance().buildOnlineList(targetLoveSongs);
+                 }
+
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError error) {
+
+                 }
+             });
+
+         }
+
+
+         @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+    }
+
+
 //    private void showMenuDialog() {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setItems(R.array.menu_items, new DialogInterface.OnClickListener() {
@@ -269,25 +341,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        builder.create().show();
 //    }
 
-//    private List<ItemSongHome> databaseProcessing(int key){
-////        create database
-//        database = new Database(this);
-////        create table
-//        database.QueryData("CREATE TABLE IF NOT EXISTS CaSi(Id INTEGER PRIMARY KEY, AudioTitle VARCHAR(255), AudioId VARCHAR(255), FilePath VARCHAR(255), Singer VARCHAR(255), TypeCaSi INTEGER) ");
-////        insert data
-////        database.QueryData("INSERT INTO CaSi VALUES(1,'Trên tình bạn dưới tình yêu','upfriendshipdownlove','hms_res://upfriendshipdownlove','Min',1)");
-////        database.QueryData("INSERT INTO CaSi VALUES(2,'Đi đu đưa đi','diduduadi','hms_res://diduduadi','Bích Phương',2)");
-//        Cursor getData = database.GetData("SELECT * FROM CaSi WHERE TypeCaSi = " + key);
-//
-//        List<ItemSongHome> itemSongHomes = new ArrayList<>();
-////        while (getData.moveToNext()){
-////            String title        = getData.getString(1);
-////            String audioId      = getData.getString(2);
-////            String url          = getData.getString(3);
-////            String singername   = getData.getString(4);
-////            itemSongHomes.add(new ItemSongHome(title,audioId,url,singername));
-//////            Toast.makeText(this, "Name: "+title + ", Url: "+url + ", singername: "+singername , Toast.LENGTH_LONG).show();
-////        }
-//        return itemSongHomes;
-//    }
 }
