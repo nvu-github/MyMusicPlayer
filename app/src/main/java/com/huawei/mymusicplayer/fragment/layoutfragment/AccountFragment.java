@@ -40,9 +40,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.huawei.mymusicplayer.AddSongActivity;
+import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
+
 import com.huawei.mymusicplayer.account.AccountActivity;
+
+
+import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.dialog.CustomDialogLogout;
 
 import java.io.InputStream;
@@ -51,13 +56,14 @@ import java.util.ArrayList;
 public class AccountFragment extends Fragment{
     private static final String TAG = "AccountFragment";
     LinearLayout mySongs, favoriteSongs, signInPlease;
-    TextView add_playlist, profile, tv_addSong, tv_signIn_out;
-    ImageView mySong, profile_avatar, imv_signIn_out;
+    TextView add_playlist, profile, tv_addSong, tv_signIn_out, favorite_song;
+    ImageView profile_avatar, imv_signIn_out;
     RecyclerView listPlaylist;
     ArrayList<Playlist> arrPlaylist;
     CustomAdapter myAdapter;
     DatabaseReference database;
     public static final String PROFILE_INFORMATION = "profile";
+    private String account_id = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +79,17 @@ public class AccountFragment extends Fragment{
         mySongs = view.findViewById(R.id.mySongs);
         favoriteSongs = view.findViewById(R.id.favoriteSongs);
         signInPlease = view.findViewById(R.id.signInPlease);
+        favorite_song = view.findViewById(R.id.favorite_song);
+        //favorite_song
+
+        favorite_song.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("status", "love_song");
+                startActivity(intent);
+            }
+        });
         // create click event
         add_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +125,6 @@ public class AccountFragment extends Fragment{
             String display_name = prefs.getString("display_name", "profile");//"No name defined" is the default value.
             String avatar = prefs.getString("avatar","avatar"); //0 is the default value.
             account_id = prefs.getString("union_id","union_id");
-            // change text
             profile.setText(display_name);
             tv_signIn_out.setText("Đăng xuất");
             imv_signIn_out.setImageResource(R.drawable.sign_out);
@@ -129,19 +145,31 @@ public class AccountFragment extends Fragment{
         arrPlaylist = new ArrayList<>();
         myAdapter = new CustomAdapter(getActivity(), arrPlaylist, new CustomAdapter.IClickListener() {
             @Override
+            public void onClickUpdateItem(Playlist playlist) {
+                openDialogUpdateItem(playlist);
+            }
+
+            @Override
             public void onClickDeleteItem(Playlist playlist) {
                 onClickDeleteData(playlist);
             }
         });
         showdata(account_id);
         listPlaylist.setAdapter(myAdapter);
+        showdata(account_id);
         return view;
     }
-    private Boolean hasAccount(){
+
+
+    public void setText(String text){
+        TextView textView = (TextView) getView().findViewById(R.id.profile);
+        textView.setText(text);
+    }
+    private Boolean hasAccount() {
         SharedPreferences sharedPrefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
-        if(sharedPrefs.contains("union_id")){
+        if (sharedPrefs.contains("union_id")) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -162,7 +190,17 @@ public class AccountFragment extends Fragment{
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                Playlist playlist = snapshot.getValue(Playlist.class);
+                if(playlist == null || arrPlaylist == null || arrPlaylist.isEmpty()){
+                    return;
+                }
+                for(int i = 0; i<arrPlaylist.size(); i++){
+                    if(playlist.getKey() == arrPlaylist.get(i).getKey())
+                    {
+                        arrPlaylist.set(i, playlist);
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -192,6 +230,47 @@ public class AccountFragment extends Fragment{
 
             }
         });
+    }
+
+    private void openDialogUpdateItem(Playlist playlist)
+    {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit);
+
+        Window window = dialog.getWindow();
+        if(window == null){
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        EditText edit = dialog.findViewById(R.id.playlist_name_edit);
+        Button btn_edit = dialog.findViewById(R.id.btn_edit);
+        Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        edit.setText(playlist.getName());
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newName = edit.getText().toString().trim();
+                playlist.setName(newName);
+                database.child(String.valueOf(playlist.getKey())).updateChildren(playlist.toMap(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getActivity(), "Update success", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        dialog.show();
     }
 
     private void onClickDeleteData(Playlist playlist){
@@ -247,7 +326,7 @@ public class AccountFragment extends Fragment{
                         String name = editText.getText().toString().trim();
                         if(!TextUtils.isEmpty(name)){
                             String key = database.push().getKey();
-                            Playlist playlist = new Playlist(key,name);
+                            Playlist playlist = new Playlist(key,account_id,name);
                             database.child(key).setValue(playlist);
                             Toast.makeText(getActivity(), "Thêm playlist thành công", Toast.LENGTH_LONG).show();
 

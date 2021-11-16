@@ -1,25 +1,41 @@
 package com.huawei.mymusicplayer.fragment.nowplaying;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.huawei.mymusicplayer.MyApplication.getContext;
+import static com.huawei.mymusicplayer.account.AccountActivity.PROFILE_INFORMATION;
+
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
+import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
-import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
+    private ImageView song;
+    private DatabaseReference database;
 
     private static class ViewHolder {
 
@@ -27,15 +43,14 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
         private TextView mArtistName = null;
 
-
-        private ImageView menu_song;
+        private ImageView love_song;
 
         private View lineImage = null;
     }
 
     private int listItemMargin;
 
-//    private static class DeleteViewClickListener implements View.OnClickListener {
+    //    private static class DeleteViewClickListener implements View.OnClickListener {
 //        int pos;
 //
 //        DeleteViewClickListener(int pos) {
@@ -78,7 +93,8 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.mTrackName = ViewUtils.findViewById(contentView, R.id.line1);
             viewholder.mArtistName = ViewUtils.findViewById(contentView, R.id.line2);
             viewholder.lineImage = ViewUtils.findViewById(contentView, R.id.simple_line);
-            viewholder.menu_song = ViewUtils.findViewById(contentView, R.id.menu_song);
+            viewholder.love_song = ViewUtils.findViewById(contentView, R.id.love_song);
+            song = viewholder.love_song;
             contentView.setTag(viewholder);
         }
         return contentView;
@@ -91,27 +107,64 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         viewholder.mArtistName.setText(songBean.getSinger());
 //        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
+        SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String userID = prefs.getString("union_id", "0");
+        if (userID != "0") {
+            viewholder.love_song.setVisibility(View.VISIBLE);
+            viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
+//            database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
+//            database.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    Log.i("test_snapshot", snapshot.toString());
+//                    List<LoveSong> songList = new ArrayList<>();
+//                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
+//                        LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
+//                        if(lovesong.getSongID().equals(songBean.getAudioId())){
+//                            songList.add(lovesong);
+//                        }
+//                        if(lovesong.getSongID().equals(songBean.getAudioId())){
+//                            Log.i("TAG", "onDataChange1");
+//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                        }else{
+//                            Log.i("TAG", "onDataChange2");
+//                            viewholder.love_song.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+//                        }
+//                    }
+//                    Log.i("TAG", "onDataChange: " + songList.size());
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+        }
+
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
     }
 
-//    private void ShowMenu(){
-//        PopupMenu popupMenu = new PopupMenu();
-//        popupMenu.inflate(R.menu.menu);
-//        popupMenu.setOnMenuItemClickListener(this);
-//        popupMenu.show();
-//    }
-//    @Override
-//    public void onMenuItemClick(MenuItem item)
-//    {
-//        switch (item.getItemId()){
-//            case R.id.addToPlaylist:
-//                Log.i("them playlits", "them");
-//                break;
-//            case R.id.delete_song:
-//                Log.i("xoa playlits", "xoa");
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+
+    private static class OptionViewClick implements View.OnClickListener {
+        int pos;
+        HwAudioPlayItem songBean;
+        private DatabaseReference database_song;
+        SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String userID = prefs.getString("union_id", "union_id");
+        Boolean click = false;
+
+        OptionViewClick(int pos, HwAudioPlayItem songBean) {
+            this.pos = pos;
+            this.songBean = songBean;
+        }
+
+        @Override
+        public void onClick(View v) {
+            click = true;
+            database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
+            String key = database_song.push().getKey();
+            LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
+            database_song.child(key).setValue(loveSong);
+        }
+    }
 }

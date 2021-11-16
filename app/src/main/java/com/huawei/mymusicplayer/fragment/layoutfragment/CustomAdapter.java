@@ -33,6 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private Context mContext;
     private IClickListener mIClickListener;
     public interface IClickListener{
+        void onClickUpdateItem(Playlist playlist);
         void onClickDeleteItem(Playlist playlist);
     }
 
@@ -56,6 +57,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             return;
         }
         holder.tenPlaylist.setText(playlist.getName());
+
+        holder.edit_playlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIClickListener.onClickUpdateItem(playlist);
+            }
+        });
+
         holder.delete_playlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,13 +95,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tenPlaylist;
-        ImageView delete_playlist;
+        ImageView delete_playlist, edit_playlist;
         LinearLayout layout_item;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tenPlaylist = itemView.findViewById(R.id.tenPlaylist);
             delete_playlist = itemView.findViewById(R.id.delete_playlist);
+            edit_playlist = itemView.findViewById(R.id.edit_playlist);
             layout_item = itemView.findViewById(R.id.layout_item);
         }
     }
