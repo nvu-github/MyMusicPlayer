@@ -4,24 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_account.xml" value="0.264" />
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_add_song.xml" value="0.27447916666666666" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_layout_main.xml" value="0.1793478260869565" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_login_huawei.xml" value="0.1793478260869565" />
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.25271739130434784" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_add.xml" value="0.13697916666666668" />
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_add_song.xml" value="0.25271739130434784" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/dialog_logout.xml" value="0.2" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_account.xml" value="0.264" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_home.xml" value="0.2572463768115942" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/fragment_list.xml" value="0.2572463768115942" />
         <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/item_banner.xml" value="0.2572463768115942" />
-        <entry key="..\:/MyMusicPlayer/app/src/main/res/layout/song_list_layout.xml" value="0.25271739130434784" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/drawable-xxxhdpi/background_dialog.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/drawable-xxxhdpi/dialog.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/drawable-xxxhdpi/dialog_border.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/layout/dialog_add.xml" value="0.1" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/layout/fragment_account.xml" value="0.1" />
         <entry key="..\:/Users/Admin/MyMusicPlayer/app/src/main/res/layout/playlist_item.xml" value="0.1" />
+        <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/activity_add_song.xml" value="0.264" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/activity_layout_main.xml" value="0.2" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/TGDD/AndroidStudioProjects/MyMusicPlayer/app/src/main/res/layout/activity_search.xml" value="0.25" />
