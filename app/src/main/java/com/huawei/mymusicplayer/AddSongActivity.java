@@ -1,23 +1,17 @@
 package com.huawei.mymusicplayer;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,18 +25,20 @@ import java.util.List;
 
 public class AddSongActivity extends AppCompatActivity {
     private static final String TAG = "AddSongActivity";
+    public static final String PROFILE_INFORMATION = "profile";
     Button btn_addSong;
     ImageView backActivity;
     ScrollView scrollViewListSong;
     DatabaseReference databaseSongs;
-    ListView listViewSongs;
+    RecyclerView listViewSongs;
+    FavoriteSongList favoriteSongList;
     List<FavoriteSong> favoriteSongLists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_song);
-        scrollViewListSong = (ScrollView)findViewById(R.id.scrollViewListSong);
-        listViewSongs = (ListView) findViewById(R.id.lv_FavoriteSong);
+        scrollViewListSong = findViewById(R.id.scrollViewListSong);
+        listViewSongs = findViewById(R.id.lv_FavoriteSong);
         btn_addSong = findViewById(R.id.btn_addSong);
         backActivity = findViewById(R.id.backActivity);
         favoriteSongLists = new ArrayList<FavoriteSong>();
@@ -59,63 +55,33 @@ public class AddSongActivity extends AppCompatActivity {
                 finish();
             }
         });
-        listViewSongs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ImageView deleteSong = parent.findViewById(R.id.imv_deleteSong);
-                TextView targetSong = parent.findViewById(R.id.tv_nameSong);
-                deleteSong.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new AlertDialog.Builder(AddSongActivity.this)
-                                .setTitle(getString(R.string.app_name))
-                                .setMessage("Bạn có chắc muốn xoá bài hát này không?")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("favorite_song");
-                                        FavoriteSong favoriteSong =(FavoriteSong) parent.getItemAtPosition(position);
-                                        databaseSongs.child(String.valueOf(favoriteSong.getId())).removeValue(new DatabaseReference.CompletionListener() {
-                                            @Override
-                                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                                Toast.makeText(AddSongActivity.this, "Delete song success", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                })
-                                .setNegativeButton("Cancel", null)
-                                .show();
-                    }
-                });
-                targetSong.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FavoriteSong favoriteSong =(FavoriteSong) parent.getItemAtPosition(position);
-                        Intent toMainActivity = new Intent(AddSongActivity.this, MainActivity.class);
-                        toMainActivity.putExtra("songID",favoriteSong.getId());
-                        toMainActivity.putExtra("status","favorite_song");
-                        startActivity(toMainActivity);
-                    }
-                });
-            }
-        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        listViewSongs.setLayoutManager(linearLayoutManager);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        listViewSongs.addItemDecoration(itemDecoration);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("favorite_song");
-        databaseSongs.addValueEventListener(new ValueEventListener() {
+        SharedPreferences prefs = getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String userID = prefs.getString("union_id", "has none");
+
+        databaseSongs.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 favoriteSongLists.clear();
                 for (DataSnapshot songSnapshot : snapshot.getChildren()){
-                    FavoriteSong favoriteSong = songSnapshot.getValue(FavoriteSong.class);
-                    favoriteSongLists.add(favoriteSong);
+                    FavoriteSong song = songSnapshot.getValue(FavoriteSong.class);
+                    if(userID.equals(song.getUserID())){
+                        favoriteSongLists.add(new FavoriteSong(song.getId(), song.getName(), song.getArtist(), song.getUrl(), song.getUserID()));
+                    }
                 }
-                FavoriteSongList adapter = new FavoriteSongList(AddSongActivity.this, favoriteSongLists);
-                listViewSongs.setAdapter(adapter);
+                favoriteSongList = new FavoriteSongList(AddSongActivity.this, favoriteSongLists);
+                listViewSongs.setAdapter(favoriteSongList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

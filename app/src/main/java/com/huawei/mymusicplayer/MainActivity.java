@@ -175,15 +175,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         databaseFavoriteSong = FirebaseDatabase
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("favorite_song");
-        databaseFavoriteSong.addValueEventListener(new ValueEventListener() {
+        SharedPreferences prefs = getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
+        String userID = prefs.getString("union_id", "has none");
+        databaseFavoriteSong.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 favoriteSongs.clear();
                 for (DataSnapshot songSnapshot : snapshot.getChildren()){
                     FavoriteSong favoriteSong = songSnapshot.getValue(FavoriteSong.class);
-                    Song song = new Song(favoriteSong.getId(), favoriteSong.getName(), "demo", "demo", "demo", favoriteSong.getUrl());
-                    Log.i(TAG, "song model: "+song.getLink());
-                   favoriteSongs.add(song);
+                    Song song = new Song(favoriteSong.getId(), favoriteSong.getName(), favoriteSong.getArtist(), "unknow", "unknow", favoriteSong.getUrl());
+                    if(song.getId().equals(songID)){
+                        favoriteSongs.add(0, song);
+                        continue;
+                    }
+                    favoriteSongs.add(song);
                 }
                 PlayHelper.getInstance().buildOnlineList(favoriteSongs);
             }
