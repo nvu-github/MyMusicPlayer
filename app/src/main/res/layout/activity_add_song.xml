@@ -7,7 +7,7 @@
     tools:context=".AddSongActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/backActivity"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -18,111 +18,55 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/titleAddSong"
         android:layout_width="316dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Quay lại"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/backActivity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/backActivity"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <TextView
+        android:id="@+id/titleChildAddSong"
+        android:layout_width="151dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="12dp"
+        android:text="Nhạc của bạn"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_addSong"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <EditText
-        android:id="@+id/et_artist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="Artist"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
-
-    <Spinner
-        android:id="@+id/sp_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:entries="@array/category"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_artist" />
-
-    <Spinner
-        android:id="@+id/sp_album"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:entries="@array/album"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sp_category" />
-
-    <EditText
-        android:id="@+id/et_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="link"
-        android:inputType="textPersonName"
-        android:maxLength="1024"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sp_album" />
+        app:layout_constraintTop_toBottomOf="@+id/backActivity" />
 
     <Button
         android:id="@+id/btn_addSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="ADD"
+        android:layout_marginEnd="24dp"
+        android:text="Thêm mới"
+        app:layout_constraintBottom_toBottomOf="@+id/titleChildAddSong"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_link" />
+        app:layout_constraintTop_toTopOf="@+id/titleChildAddSong"
+        app:layout_constraintVertical_bias="0.241" />
 
     <ScrollView
         android:id="@+id/scrollViewListSong"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="386dp"
+        android:layout_height="480dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addSong"
-        android:fillViewport="true"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/titleChildAddSong"
+        app:layout_constraintVertical_bias="0.509">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,7 +74,7 @@
             android:orientation="vertical">
 
             <ListView
-                android:id="@+id/lv_listSongs"
+                android:id="@+id/lv_FavoriteSong"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp" />
