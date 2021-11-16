@@ -35,7 +35,6 @@ public class SampleData {
             audioPlayItem.setAudioTitle(song.getName());
             playItemList.add(audioPlayItem);
         }
-        Log.i(TAG, "getOnlinePlaylist: "+songs.toString());
         return playItemList;
     }
     public List<HwAudioPlayItem> getLocalPlayList(Context context, List<ItemSongHome> itemSongHomes) {
