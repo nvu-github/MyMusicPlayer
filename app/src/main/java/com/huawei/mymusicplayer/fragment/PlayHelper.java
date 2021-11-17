@@ -301,14 +301,14 @@ public class PlayHelper {
 //        return effectManager;
 //    }
 //
-    public void deleteItem(int pos) {
-        Log.i(TAG, "deleteItem,pos: " + pos);
-        if (mHwAudioQueueManager == null) {
-            Log.w(TAG, "deleteItem err");
-            return;
-        }
-        mHwAudioQueueManager.removeListByIndex(pos);
-    }
+//    public void deleteItem(int pos) {
+//        Log.i(TAG, "deleteItem,pos: " + pos);
+//        if (mHwAudioQueueManager == null) {
+//            Log.w(TAG, "deleteItem err");
+//            return;
+//        }
+//        mHwAudioQueueManager.removeListByIndex(pos);
+//    }
 //
 //    public String getCacheSize() {
 //        Log.i(TAG, "getCacheSize ");

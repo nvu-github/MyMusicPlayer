@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        startanimation();
         databaseSongs = FirebaseDatabase
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("songs");
@@ -252,22 +251,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
         mPlayModeView.setOnClickListener(this);
-    }
-
-    public void startanimation(){
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                mCircleImageView.animate().rotationBy(360).withEndAction(this).setDuration(5000)
-                        .setInterpolator(new LinearInterpolator()).start();
-            }
-        };
-        mCircleImageView.animate().rotationBy(360).withEndAction(runnable).setDuration(5000)
-                .setInterpolator(new LinearInterpolator()).start();
-    }
-
-    public void stopanimation(){
-        mCircleImageView.animate().cancel();
     }
 
     private void addFragment(int id, Fragment fragment) {
