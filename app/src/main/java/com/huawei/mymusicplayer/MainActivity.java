@@ -27,6 +27,7 @@ import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
@@ -41,6 +42,8 @@ import com.huawei.mymusicplayer.utils.ViewUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mNowPlayingFragment.updatePlayingPos();
             }
            PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
+
         }
     };
 
@@ -246,8 +250,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSettingMenu.setOnClickListener(this);
         mImgback.setOnClickListener(this);
 
-//        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
-//        mPlayModeView.setOnClickListener(this);
+        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
+        mPlayModeView.setOnClickListener(this);
     }
 
     public void startanimation(){

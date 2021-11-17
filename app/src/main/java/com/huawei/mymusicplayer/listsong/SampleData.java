@@ -8,12 +8,15 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
+import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.model.FavoriteSong;
 import com.huawei.mymusicplayer.model.Song;
 import com.huawei.mymusicplayer.home.ItemSongHome;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +25,17 @@ import static android.content.ContentValues.TAG;
 
 
 public class SampleData {
-    DatabaseReference databaseSongs;
-
+    List<Song> mSong;
     public List<HwAudioPlayItem> getOnlinePlaylist(List<Song> songs) {
+        mSong = songs;
+        Collections.sort(mSong, new Comparator<Song>() {
+            @Override
+            public int compare(Song o1, Song o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         List<HwAudioPlayItem> playItemList = new ArrayList<>();
-        for (Song song : songs) {
+        for (Song song : mSong) {
             HwAudioPlayItem audioPlayItem = new HwAudioPlayItem();
             audioPlayItem.setAudioId(song.getId());
             audioPlayItem.setSinger(song.getArtist());
@@ -35,7 +44,6 @@ public class SampleData {
             audioPlayItem.setAudioTitle(song.getName());
             playItemList.add(audioPlayItem);
         }
-        Log.i(TAG, "getOnlinePlaylist: "+songs.toString());
         return playItemList;
     }
     public List<HwAudioPlayItem> getLocalPlayList(Context context, List<ItemSongHome> itemSongHomes) {
