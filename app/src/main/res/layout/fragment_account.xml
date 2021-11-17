@@ -116,56 +116,55 @@
                 android:layout_height="match_parent"
                 android:paddingTop="16dp"
                 android:text="Không gian của bạn"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Playlist"
-        android:layout_marginLeft="16dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Playlist"-->
+<!--        android:layout_marginLeft="16dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="20dp" />-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        >
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingHorizontal="16dp"-->
+<!--        >-->
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/playlist" />
+<!--        <ImageView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:src="@drawable/playlist" />-->
 
-        <TextView
-            android:id="@+id/add_playlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="16dp"
-            android:text="Tạo playlist"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+<!--        <TextView-->
+<!--            android:id="@+id/add_playlist"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:paddingTop="16dp"-->
+<!--            android:text="Tạo playlist"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="15sp" />-->
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        >-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listPlaylist"
-            android:layout_width="match_parent"
-            android:layout_height="164dp"
-            android:paddingHorizontal="16dp" />
-    </LinearLayout>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/listPlaylist"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="164dp"-->
+<!--            android:paddingHorizontal="16dp" />-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

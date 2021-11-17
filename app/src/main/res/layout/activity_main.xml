@@ -75,12 +75,11 @@
             android:id="@+id/playmode_imagebutton"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_below="@id/pro_layout"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
-            android:layout_below="@id/pro_layout"
             android:layout_marginTop="14.5dp"
-            android:scaleType="center"
-            />
+            android:scaleType="center" />
 
         <ImageView
             android:id="@+id/setting_content_layout"

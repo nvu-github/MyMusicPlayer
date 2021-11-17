@@ -58,7 +58,7 @@ public class AccountFragment extends Fragment{
     LinearLayout mySongs, favoriteSongs, signInPlease;
     TextView add_playlist, profile, tv_addSong, tv_signIn_out, favorite_song;
     ImageView profile_avatar, imv_signIn_out;
-    RecyclerView listPlaylist;
+//    RecyclerView listPlaylist;
     ArrayList<Playlist> arrPlaylist;
     CustomAdapter myAdapter;
     DatabaseReference database;
@@ -72,7 +72,7 @@ public class AccountFragment extends Fragment{
         // get id
         profile = view.findViewById(R.id.profile);
         profile_avatar = view.findViewById(R.id.profile_avatar);
-        add_playlist = view.findViewById(R.id.add_playlist);
+//        add_playlist = view.findViewById(R.id.add_playlist);
         tv_addSong = view.findViewById(R.id.tv_addSong);
         tv_signIn_out = view.findViewById(R.id.tv_signIn_out);
         imv_signIn_out = view.findViewById(R.id.imv_signIn_out);
@@ -90,12 +90,12 @@ public class AccountFragment extends Fragment{
             }
         });
         // create click event
-        add_playlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openDialog(Gravity.CENTER);
-            }
-        });
+//        add_playlist.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                openDialog(Gravity.CENTER);
+//            }
+//        });
         tv_addSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,22 +139,22 @@ public class AccountFragment extends Fragment{
             });
 
         }
-        listPlaylist = view.findViewById(R.id.listPlaylist);
-        listPlaylist.setLayoutManager(new LinearLayoutManager(getActivity()));
-        arrPlaylist = new ArrayList<>();
-        myAdapter = new CustomAdapter(getActivity(), arrPlaylist, new CustomAdapter.IClickListener() {
-            @Override
-            public void onClickUpdateItem(Playlist playlist) {
-                openDialogUpdateItem(playlist);
-            }
-
-            @Override
-            public void onClickDeleteItem(Playlist playlist) {
-                onClickDeleteData(playlist);
-            }
-        });
-        listPlaylist.setAdapter(myAdapter);
-        showdata(account_id);
+//        listPlaylist = view.findViewById(R.id.listPlaylist);
+//        listPlaylist.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        arrPlaylist = new ArrayList<>();
+//        myAdapter = new CustomAdapter(getActivity(), arrPlaylist, new CustomAdapter.IClickListener() {
+//            @Override
+//            public void onClickUpdateItem(Playlist playlist) {
+//                openDialogUpdateItem(playlist);
+//            }
+//
+//            @Override
+//            public void onClickDeleteItem(Playlist playlist) {
+//                onClickDeleteData(playlist);
+//            }
+//        });
+//        listPlaylist.setAdapter(myAdapter);
+//        showdata(account_id);
         return view;
     }
 
@@ -171,171 +171,171 @@ public class AccountFragment extends Fragment{
             return false;
         }
     }
-    public void showdata(String account_id)
-    {
-        database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Playlist");
-        database.orderByChild("account_id").equalTo(account_id).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Playlist pl = snapshot.getValue(Playlist.class);
-                if(pl != null)
-                {
-                    arrPlaylist.add(pl);
-                    myAdapter.notifyDataSetChanged();
-                }
+//    public void showdata(String account_id)
+//    {
+//        database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Playlist");
+//        database.orderByChild("account_id").equalTo(account_id).addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Playlist pl = snapshot.getValue(Playlist.class);
+//                if(pl != null)
+//                {
+//                    arrPlaylist.add(pl);
+//                    myAdapter.notifyDataSetChanged();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                Playlist playlist = snapshot.getValue(Playlist.class);
+//                if(playlist == null || arrPlaylist == null || arrPlaylist.isEmpty()){
+//                    return;
+//                }
+//                for(int i = 0; i<arrPlaylist.size(); i++){
+//                    if(playlist.getKey() == arrPlaylist.get(i).getKey())
+//                    {
+//                        arrPlaylist.set(i, playlist);
+//                    }
+//                }
+//                myAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//                Playlist pl = snapshot.getValue(Playlist.class);
+//                if(pl == null || arrPlaylist == null || arrPlaylist.isEmpty()){
+//                    return;
+//                }
+//                for(int i = 0; i<arrPlaylist.size(); i++)
+//                {
+//                    if(pl.getKey() == arrPlaylist.get(i).getKey())
+//                    {
+//                        arrPlaylist.remove(arrPlaylist.get(i));
+//                        break;
+//                    }
+//                }
+//                myAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-            }
+//    private void openDialogUpdateItem(Playlist playlist)
+//    {
+//        final Dialog dialog = new Dialog(getActivity());
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_edit);
+//
+//        Window window = dialog.getWindow();
+//        if(window == null){
+//            return;
+//        }
+//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.setCancelable(false);
+//
+//        EditText edit = dialog.findViewById(R.id.playlist_name_edit);
+//        Button btn_edit = dialog.findViewById(R.id.btn_edit);
+//        Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+//        edit.setText(playlist.getName());
+//        btn_cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        btn_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String newName = edit.getText().toString().trim();
+//                playlist.setName(newName);
+//                database.child(String.valueOf(playlist.getKey())).updateChildren(playlist.toMap(), new DatabaseReference.CompletionListener() {
+//                    @Override
+//                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                        Toast.makeText(getActivity(), "Update success", Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                });
+//            }
+//        });
+//        dialog.show();
+//    }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Playlist playlist = snapshot.getValue(Playlist.class);
-                if(playlist == null || arrPlaylist == null || arrPlaylist.isEmpty()){
-                    return;
-                }
-                for(int i = 0; i<arrPlaylist.size(); i++){
-                    if(playlist.getKey() == arrPlaylist.get(i).getKey())
-                    {
-                        arrPlaylist.set(i, playlist);
-                    }
-                }
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Playlist pl = snapshot.getValue(Playlist.class);
-                if(pl == null || arrPlaylist == null || arrPlaylist.isEmpty()){
-                    return;
-                }
-                for(int i = 0; i<arrPlaylist.size(); i++)
-                {
-                    if(pl.getKey() == arrPlaylist.get(i).getKey())
-                    {
-                        arrPlaylist.remove(arrPlaylist.get(i));
-                        break;
-                    }
-                }
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void openDialogUpdateItem(Playlist playlist)
-    {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_edit);
-
-        Window window = dialog.getWindow();
-        if(window == null){
-            return;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(false);
-
-        EditText edit = dialog.findViewById(R.id.playlist_name_edit);
-        Button btn_edit = dialog.findViewById(R.id.btn_edit);
-        Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
-        edit.setText(playlist.getName());
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        btn_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newName = edit.getText().toString().trim();
-                playlist.setName(newName);
-                database.child(String.valueOf(playlist.getKey())).updateChildren(playlist.toMap(), new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(getActivity(), "Update success", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
-        dialog.show();
-    }
-
-    private void onClickDeleteData(Playlist playlist){
-        new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.app_name))
-                .setMessage("Bạn có chắc muốn xoá playlist này không?")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        database.child(String.valueOf(playlist.getKey())).removeValue(new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(getActivity(), "Delete playlist success", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
+//    private void onClickDeleteData(Playlist playlist){
+//        new AlertDialog.Builder(getActivity())
+//                .setTitle(getString(R.string.app_name))
+//                .setMessage("Bạn có chắc muốn xoá playlist này không?")
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        database.child(String.valueOf(playlist.getKey())).removeValue(new DatabaseReference.CompletionListener() {
+//                            @Override
+//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                Toast.makeText(getActivity(), "Delete playlist success", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                })
+//                .setNegativeButton("Cancel", null)
+//                .show();
+//    }
 
 
-    private void openDialog(int gravity)
-    {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_add);
-
-        Window window = dialog.getWindow();
-        if(window == null){
-            return;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams windowattributes = window.getAttributes();
-        windowattributes.gravity = gravity;
-        window.setAttributes(windowattributes);
-
-        if(Gravity.CENTER == gravity){
-            dialog.setCancelable(true);
-        }else{
-            dialog.setCancelable(false);
-        }
-
-        EditText editText = dialog.findViewById(R.id.playlist_name);
-        Button button = dialog.findViewById(R.id.btn_add);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.btn_add:
-                        String name = editText.getText().toString().trim();
-                        if(!TextUtils.isEmpty(name)){
-                            String key = database.push().getKey();
-                            Playlist playlist = new Playlist(key,account_id,name);
-                            database.child(key).setValue(playlist);
-                            Toast.makeText(getActivity(), "Thêm playlist thành công", Toast.LENGTH_LONG).show();
-
-                        }else{
-                            Toast.makeText(getActivity(), "Thêm playlist thất bại", Toast.LENGTH_LONG).show();
-                        }
-                }
-            }
-        });
-        dialog.show();
-    }
+//    private void openDialog(int gravity)
+//    {
+//        final Dialog dialog = new Dialog(getActivity());
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_add);
+//
+//        Window window = dialog.getWindow();
+//        if(window == null){
+//            return;
+//        }
+//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        WindowManager.LayoutParams windowattributes = window.getAttributes();
+//        windowattributes.gravity = gravity;
+//        window.setAttributes(windowattributes);
+//
+//        if(Gravity.CENTER == gravity){
+//            dialog.setCancelable(true);
+//        }else{
+//            dialog.setCancelable(false);
+//        }
+//
+//        EditText editText = dialog.findViewById(R.id.playlist_name);
+//        Button button = dialog.findViewById(R.id.btn_add);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (v.getId()){
+//                    case R.id.btn_add:
+//                        String name = editText.getText().toString().trim();
+//                        if(!TextUtils.isEmpty(name)){
+//                            String key = database.push().getKey();
+//                            Playlist playlist = new Playlist(key,account_id,name);
+//                            database.child(key).setValue(playlist);
+//                            Toast.makeText(getActivity(), "Thêm playlist thành công", Toast.LENGTH_LONG).show();
+//
+//                        }else{
+//                            Toast.makeText(getActivity(), "Thêm playlist thất bại", Toast.LENGTH_LONG).show();
+//                        }
+//                }
+//            }
+//        });
+//        dialog.show();
+//    }
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> { // class lấy link avatar từ profile huawei convert to bitmap và hiển thị trên imageview

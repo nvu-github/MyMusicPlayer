@@ -16,6 +16,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="5dp"
             android:src="@drawable/ic_baseline_keyboard_return_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.02"
@@ -48,7 +49,7 @@
             android:layout_height="32dp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
-            android:text="Bài hát yêu thích"
+            android:text="Bài hát yêu thích của bạn"
             android:textStyle="bold"
             android:textSize="24dp"
             android:textColor="@color/black" />

@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +39,7 @@ public class AddSongActivity extends AppCompatActivity {
     RecyclerView listViewSongs;
     FavoriteSongList favoriteSongList;
     List<FavoriteSong> favoriteSongLists;
+    ImageView btn_copy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,8 @@ public class AddSongActivity extends AppCompatActivity {
         listViewSongs = findViewById(R.id.lv_FavoriteSong);
         btn_addSong = findViewById(R.id.btn_addSong);
         backActivity = findViewById(R.id.backActivity);
+        btn_copy = findViewById(R.id.coppyurl);
+
         favoriteSongLists = new ArrayList<FavoriteSong>();
         btn_addSong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +62,16 @@ public class AddSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        btn_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("TextCoppy", "https://firebasestorage.googleapis.com/v0/b/mymusicplayer-5e719.appspot.com/o/songs%2Fnhacviet%2Fhong%20nhan.mp3?alt=media&token=89a4fbee-749f-404a-b435-34a034735071");
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(AddSongActivity.this, "coppy to clipboard", Toast.LENGTH_SHORT).show();
             }
         });
 

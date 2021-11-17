@@ -60,6 +60,7 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                 context.startActivity(toMainActivity);
             }
         });
+        
         holder.imvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

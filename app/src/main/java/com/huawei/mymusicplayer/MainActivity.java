@@ -27,6 +27,7 @@ import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.mymusicplayer.fragment.PlayHelper;
+import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.fragment.nowplaying.NowPlayingFragment;
 import com.huawei.mymusicplayer.fragment.playbutton.PlayControlButtonFragment;
@@ -35,11 +36,14 @@ import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.fragment.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.model.FavoriteSong;
 import com.huawei.mymusicplayer.model.Song;
+import com.huawei.mymusicplayer.utils.PlayModeUtils;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
@@ -51,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
 
-//    private ImageView mPlayModeView;
+    private ImageView mPlayModeView;
     private PlayControlButtonFragment mPlayControlButtonFragment;
     private SeekBarFragment mSeekBarFragment;
     private NowPlayingFragment mNowPlayingFragment;
@@ -111,14 +115,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mNowPlayingFragment != null) {
                 mNowPlayingFragment.updatePlayingPos();
             }
-//            PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
+            PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
         }
     };
 
     @Override
     protected void onResume() {
         super.onResume();
-//        PlayModeUtils.getInstance().updatePlayMode(this, mPlayModeView);
+        PlayModeUtils.getInstance().updatePlayMode(this, mPlayModeView);
     }
 
     @Override
@@ -246,8 +250,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSettingMenu.setOnClickListener(this);
         mImgback.setOnClickListener(this);
 
-//        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
-//        mPlayModeView.setOnClickListener(this);
+        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
+        mPlayModeView.setOnClickListener(this);
     }
 
     public void startanimation(){
@@ -282,9 +286,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.backActivities :
                 finish();
                 break;
-//            case R.id.playmode_imagebutton:
-//                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
-//                break;
+            case R.id.playmode_imagebutton:
+                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
+                break;
 //            case R.id.setting_content_layout:
 //                addAlldata();
 //                showMenuDialog();
