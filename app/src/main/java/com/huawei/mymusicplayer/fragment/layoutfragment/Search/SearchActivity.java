@@ -20,6 +20,9 @@ import com.huawei.mymusicplayer.R;
 import com.huawei.mymusicplayer.model.Song;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
@@ -67,12 +70,12 @@ public class SearchActivity extends AppCompatActivity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    songList.clear();
                     mList = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         Song song = ds.getValue(Song.class);
                         mList.add(new item_search(song.getId(),R.drawable.app_icon1,song.getName(),song.getArtist()));
                     }
+                    sortArrayList();
                     mSearchAdapter = new SearchAdapter(SearchActivity.this,mList);
                     mRecyclerview.setAdapter(mSearchAdapter);
                 }
@@ -97,6 +100,15 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void sortArrayList(){
+        Collections.sort(mList, new Comparator<item_search>() {
+            @Override
+            public int compare(item_search o1, item_search o2) {
+                return o1.getNamebaihat_search().compareTo(o2.getNamebaihat_search());
+            }
+        });
     }
 
     private void search(String textSearch){
