@@ -2,14 +2,21 @@ package com.huawei.mymusicplayer;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +92,60 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
             }
         });
 
+        holder.update_song.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_update_song);
+
+                Window window = dialog.getWindow();
+                if(window == null){
+                    return;
+                }
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+
+                EditText edit_name = dialog.findViewById(R.id.ed_nameSong);
+                EditText ed_artist = dialog.findViewById(R.id.ed_artist);
+                EditText ed_urlSong = dialog.findViewById(R.id.ed_urlSong);
+
+                Button btn_edit = dialog.findViewById(R.id.btn_dialog_update_song);
+                Button btn_cancel = dialog.findViewById(R.id.btn_dialog_cancel);
+
+                edit_name.setText(song.getName());
+                ed_artist.setText(song.getArtist());
+                ed_urlSong.setText(song.getUrl());
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String newName = edit_name.getText().toString().trim();
+                        String newArtist = ed_artist.getText().toString().trim();
+                        String newUrl = ed_urlSong.getText().toString().trim();
+                        song.setName(newName);
+                        song.setName(newArtist);
+                        song.setName(newUrl);
+//                        databaseSongs.child(String.valueOf(song.getId())).updateChildren(song.toMap(), new DatabaseReference.CompletionListener() {
+//                            @Override
+//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+//                                dialog.dismiss();
+//                            }
+//                        });
+                    }
+                });
+                dialog.show();
+            }
+        });
+
     }
     @Override
     public int getItemCount() {
@@ -95,11 +156,12 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
     }
     protected class FavoriteSongHolder extends  RecyclerView.ViewHolder{
         private TextView txtNameSong;
-        private ImageView imvDelete;
+        private ImageView imvDelete, update_song;
         public FavoriteSongHolder(@NonNull View itemView) {
             super(itemView);
             txtNameSong = itemView.findViewById(R.id.tv_nameSong);
             imvDelete = itemView.findViewById(R.id.imv_deleteSong);
+            update_song = itemView.findViewById(R.id.update_song);
         }
     }
 }

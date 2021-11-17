@@ -47,10 +47,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
-//import com.huawei.mymusicplayer.utils.PlayModeUtils;
+import com.huawei.mymusicplayer.utils.PlayModeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -115,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mNowPlayingFragment != null) {
                 mNowPlayingFragment.updatePlayingPos();
             }
-            PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
+           PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
+
         }
     };
 
@@ -133,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         databaseSongs = FirebaseDatabase
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("songs");
-
+        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
+        mPlayModeView.setOnClickListener(this);
         Bundle bundle   = getIntent().getExtras();
         String album    = "";
         String idsearch = "";

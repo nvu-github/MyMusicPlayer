@@ -1,5 +1,8 @@
 package com.huawei.mymusicplayer.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FavoriteSong {
 
 
@@ -58,6 +61,14 @@ public class FavoriteSong {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("artist", artist);
+        result.put("url", url);
+        return result;
     }
 
 }
