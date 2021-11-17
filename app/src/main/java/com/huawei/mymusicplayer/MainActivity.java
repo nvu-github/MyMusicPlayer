@@ -35,6 +35,7 @@ import com.huawei.mymusicplayer.home.ItemSongHome;
 import com.huawei.mymusicplayer.fragment.seek.SeekBarFragment;
 import com.huawei.mymusicplayer.model.FavoriteSong;
 import com.huawei.mymusicplayer.model.Song;
+import com.huawei.mymusicplayer.utils.PlayModeUtils;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,15 +44,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
-//import com.huawei.mymusicplayer.utils.PlayModeUtils;
+import com.huawei.mymusicplayer.utils.PlayModeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
 
-//    private ImageView mPlayModeView;
+    private ImageView mPlayModeView;
     private PlayControlButtonFragment mPlayControlButtonFragment;
     private SeekBarFragment mSeekBarFragment;
     private NowPlayingFragment mNowPlayingFragment;
@@ -111,14 +110,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (mNowPlayingFragment != null) {
                 mNowPlayingFragment.updatePlayingPos();
             }
-//            PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
+           PlayModeUtils.getInstance().updatePlayMode(MainActivity.this, mPlayModeView);
         }
     };
 
     @Override
     protected void onResume() {
         super.onResume();
-//        PlayModeUtils.getInstance().updatePlayMode(this, mPlayModeView);
+        PlayModeUtils.getInstance().updatePlayMode(this, mPlayModeView);
     }
 
     @Override
@@ -129,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         databaseSongs = FirebaseDatabase
                 .getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("songs");
-
+        mPlayModeView = ViewUtils.findViewById(this, R.id.playmode_imagebutton);
+        mPlayModeView.setOnClickListener(this);
         Bundle bundle   = getIntent().getExtras();
         String album    = "";
         String idsearch = "";
@@ -282,9 +282,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.backActivities :
                 finish();
                 break;
-//            case R.id.playmode_imagebutton:
-//                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
-//                break;
+            case R.id.playmode_imagebutton:
+                PlayModeUtils.getInstance().changePlayMode(this, mPlayModeView);
+                break;
 //            case R.id.setting_content_layout:
 //                addAlldata();
 //                showMenuDialog();
