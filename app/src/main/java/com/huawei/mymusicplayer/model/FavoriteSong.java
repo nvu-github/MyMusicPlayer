@@ -65,9 +65,11 @@ public class FavoriteSong {
 
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
         result.put("name", name);
         result.put("artist", artist);
         result.put("url", url);
+        result.put("userID", userID);
         return result;
     }
 

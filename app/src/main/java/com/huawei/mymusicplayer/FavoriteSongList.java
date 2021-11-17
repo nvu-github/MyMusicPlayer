@@ -1,11 +1,14 @@
 package com.huawei.mymusicplayer;
 
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -26,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,12 +38,14 @@ import com.huawei.mymusicplayer.fragment.layoutfragment.Search.SearchAdapter;
 import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.model.FavoriteSong;
 
+import java.util.HashMap;
 import java.util.List;
 public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.FavoriteSongHolder>{
     List<FavoriteSong> songList;
     EditText mNamebaihat, mNamecasi, mUrl;
     Context context;
     DatabaseReference databaseSongs;
+    public static final String PROFILE_INFORMATION = "profile";
     public FavoriteSongList(Context context, List<FavoriteSong> songList) {
         this.songList = songList;
         this.context = context;
@@ -130,19 +136,21 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                 btn_edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        databaseSongs = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("favorite_song");
+                        HashMap hashMap = new HashMap();
                         String newName = edit_name.getText().toString().trim();
                         String newArtist = ed_artist.getText().toString().trim();
                         String newUrl = ed_urlSong.getText().toString().trim();
-                        song.setName(newName);
-                        song.setName(newArtist);
-                        song.setName(newUrl);
-//                        databaseSongs.child(String.valueOf(song.getId())).updateChildren(song.toMap(), new DatabaseReference.CompletionListener() {
-//                            @Override
-//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
-//                                dialog.dismiss();
-//                            }
-//                        });
+                        hashMap.put("name", newName);
+                        hashMap.put("artist", newArtist);
+                        hashMap.put("url", newUrl);
+                        databaseSongs.child(String.valueOf(song.getId())).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
                     }
                 });
                 dialog.show();
