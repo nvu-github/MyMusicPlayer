@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.huawei.mymusicplayer.dialog.CustomDialogAddSong;
 import com.huawei.mymusicplayer.fragment.layoutfragment.Search.SearchAdapter;
 import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.model.FavoriteSong;
@@ -28,6 +30,7 @@ import com.huawei.mymusicplayer.model.FavoriteSong;
 import java.util.List;
 public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.FavoriteSongHolder>{
     List<FavoriteSong> songList;
+    EditText mNamebaihat, mNamecasi, mUrl;
     Context context;
     DatabaseReference databaseSongs;
     public FavoriteSongList(Context context, List<FavoriteSong> songList) {
@@ -58,6 +61,19 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                 toMainActivity.putExtra("songID",favoriteSong.getId());
                 toMainActivity.putExtra("status","favorite_song");
                 context.startActivity(toMainActivity);
+            }
+        });
+
+        holder.imgUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogAddSong dialog = new CustomDialogAddSong(v.getContext());
+                mNamebaihat = dialog.findViewById(R.id.ed_nameSong);
+                mNamecasi = dialog.findViewById(R.id.ed_artist);
+                mUrl = dialog.findViewById(R.id.ed_urlSong);
+                Log.i("TAG", "onClick: " + mNamebaihat);
+//                mNamebaihat.setText("uc");
+                dialog.show();
             }
         });
         
@@ -96,10 +112,12 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
     protected class FavoriteSongHolder extends  RecyclerView.ViewHolder{
         private TextView txtNameSong;
         private ImageView imvDelete;
+        private ImageView imgUpdate;
         public FavoriteSongHolder(@NonNull View itemView) {
             super(itemView);
             txtNameSong = itemView.findViewById(R.id.tv_nameSong);
             imvDelete = itemView.findViewById(R.id.imv_deleteSong);
+            imgUpdate = itemView.findViewById(R.id.img_set);
         }
     }
 }
