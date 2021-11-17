@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.huawei.mymusicplayer.dialog.CustomDialogAddSong;
 import com.huawei.mymusicplayer.fragment.layoutfragment.Search.SearchAdapter;
 import com.huawei.mymusicplayer.fragment.layoutfragment.Search.item_search;
 import com.huawei.mymusicplayer.model.FavoriteSong;
@@ -35,6 +37,7 @@ import com.huawei.mymusicplayer.model.FavoriteSong;
 import java.util.List;
 public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.FavoriteSongHolder>{
     List<FavoriteSong> songList;
+    EditText mNamebaihat, mNamecasi, mUrl;
     Context context;
     DatabaseReference databaseSongs;
     public FavoriteSongList(Context context, List<FavoriteSong> songList) {
@@ -67,7 +70,7 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                 context.startActivity(toMainActivity);
             }
         });
-        
+
         holder.imvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +160,7 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
     protected class FavoriteSongHolder extends  RecyclerView.ViewHolder{
         private TextView txtNameSong;
         private ImageView imvDelete, update_song;
+
         public FavoriteSongHolder(@NonNull View itemView) {
             super(itemView);
             txtNameSong = itemView.findViewById(R.id.tv_nameSong);
