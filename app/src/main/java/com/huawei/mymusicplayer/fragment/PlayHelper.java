@@ -148,13 +148,6 @@ public class PlayHelper {
         mHwAudioPlayerManager.seekTo((int) pos);
     }
 
-//    public void buildOnlineList() {
-//        Log.i(TAG, "buildOnlineList");
-//        List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist();
-//        if (mHwAudioPlayerManager != null) {
-//            mHwAudioPlayerManager.playList(playItemList, 0, 0);
-//        }
-//    }
     public void buildOnlineList(List<Song> songs) {
         Log.i(TAG, "buildOnlineList");
         List<HwAudioPlayItem> playItemList = sampleData.getOnlinePlaylist(songs);
@@ -308,14 +301,14 @@ public class PlayHelper {
 //        return effectManager;
 //    }
 //
-//    public void deleteItem(int pos) {
-//        Log.i(TAG, "deleteItem,pos: " + pos);
-//        if (mHwAudioQueueManager == null) {
-//            Log.w(TAG, "deleteItem err");
-//            return;
-//        }
-//        mHwAudioQueueManager.removeListByIndex(pos);
-//    }
+    public void deleteItem(int pos) {
+        Log.i(TAG, "deleteItem,pos: " + pos);
+        if (mHwAudioQueueManager == null) {
+            Log.w(TAG, "deleteItem err");
+            return;
+        }
+        mHwAudioQueueManager.removeListByIndex(pos);
+    }
 //
 //    public String getCacheSize() {
 //        Log.i(TAG, "getCacheSize ");
@@ -345,7 +338,6 @@ public class PlayHelper {
         }
         mHwAudioConfigManager.clearPlayCache();
     }
-
 //
 //    public void setCacheSize(long size) {
 //        Log.i(TAG, "setCacheSize ,size：" + size);

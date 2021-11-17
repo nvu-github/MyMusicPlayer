@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.huawei.hms.api.bean.HwAudioPlayItem;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
+import com.huawei.mymusicplayer.fragment.PlayHelper;
 import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.utils.ViewUtils;
 
@@ -47,25 +48,24 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
         private TextView mArtistName = null;
 
-        private ImageView love_song;
-
+        private ImageView love_song, mDeleteView;
         private View lineImage = null;
     }
 
     private int listItemMargin;
 
-    //    private static class DeleteViewClickListener implements View.OnClickListener {
-//        int pos;
-//
-//        DeleteViewClickListener(int pos) {
-//            this.pos = pos;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            PlayHelper.getInstance().deleteItem(pos);
-//        }
-//    }
+        private static class DeleteViewClickListener implements View.OnClickListener {
+        int pos;
+
+        DeleteViewClickListener(int pos) {
+            this.pos = pos;
+        }
+
+        @Override
+        public void onClick(View v) {
+            PlayHelper.getInstance().deleteItem(pos);
+        }
+    }
 
     NowPlayingAdapter(List<HwAudioPlayItem> netSongInfos, Activity activity) {
         super(activity);
@@ -98,6 +98,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.mArtistName = ViewUtils.findViewById(contentView, R.id.line2);
             viewholder.lineImage = ViewUtils.findViewById(contentView, R.id.simple_line);
             viewholder.love_song = ViewUtils.findViewById(contentView, R.id.love_song);
+            viewholder.mDeleteView = ViewUtils.findViewById(contentView, R.id.delete);
             song = viewholder.love_song;
 
             contentView.setTag(viewholder);
@@ -110,7 +111,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         contentView.setPadding(listItemMargin, 0, listItemMargin, 0);
         viewholder.mTrackName.setText(songBean.getAudioTitle());
         viewholder.mArtistName.setText(songBean.getSinger());
-//        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
+        viewholder.mDeleteView.setOnClickListener(new DeleteViewClickListener(pos));
 
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "0");
