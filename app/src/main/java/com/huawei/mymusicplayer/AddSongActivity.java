@@ -76,7 +76,9 @@ public class AddSongActivity extends AppCompatActivity {
                 favoriteSongLists.clear();
                 for (DataSnapshot songSnapshot : snapshot.getChildren()){
                     FavoriteSong song = songSnapshot.getValue(FavoriteSong.class);
-                        favoriteSongLists.add(new FavoriteSong(song.getId(), song.getName(), song.getUrl(), song.getUserID()));
+                    if(userID.equals(song.getUserID())){
+                        favoriteSongLists.add(new FavoriteSong(song.getId(), song.getName(), song.getArtist(), song.getUrl(), song.getUserID()));
+                    }
                 }
                 favoriteSongList = new FavoriteSongList(AddSongActivity.this, favoriteSongLists);
                 listViewSongs.setAdapter(favoriteSongList);

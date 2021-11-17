@@ -39,16 +39,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.huawei.mymusicplayer.AddSongActivity;
 import com.huawei.mymusicplayer.MainActivity;
 import com.huawei.mymusicplayer.Playlist;
 import com.huawei.mymusicplayer.R;
-
 import com.huawei.mymusicplayer.account.AccountActivity;
 
-
-import com.huawei.mymusicplayer.fragment.layoutfragment.loveSong.LoveSong;
 import com.huawei.mymusicplayer.dialog.CustomDialogLogout;
+import com.huawei.mymusicplayer.loveSong;
+
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -85,8 +85,7 @@ public class AccountFragment extends Fragment{
         favorite_song.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("status", "love_song");
+                Intent intent = new Intent(getActivity(), loveSong.class);
                 startActivity(intent);
             }
         });
@@ -154,7 +153,6 @@ public class AccountFragment extends Fragment{
                 onClickDeleteData(playlist);
             }
         });
-        showdata(account_id);
         listPlaylist.setAdapter(myAdapter);
         showdata(account_id);
         return view;

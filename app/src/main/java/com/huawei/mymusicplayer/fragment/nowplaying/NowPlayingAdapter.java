@@ -118,7 +118,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
             viewholder.love_song.setVisibility(View.VISIBLE);
             viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
             database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
-            database.addValueEventListener(new ValueEventListener() {
+            database.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ArrayList<String> mylist = new ArrayList<String>();
@@ -161,7 +161,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
         @Override
         public void onClick(View v) {
             database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
-            database_song.addValueEventListener(new ValueEventListener() {
+            database_song.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ArrayList<String> mylist = new ArrayList<String>();
