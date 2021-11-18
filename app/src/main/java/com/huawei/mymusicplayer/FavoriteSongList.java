@@ -22,6 +22,7 @@ import android.widget.Button;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +67,8 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
             return;
         }
         holder.txtNameSong.setText(song.getName());
-        holder.txtNameSong.setOnClickListener(new View.OnClickListener() {
+        holder.txtCasiSong.setText(song.getArtist());
+        holder.mLn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FavoriteSong favoriteSong = song;
@@ -91,7 +93,7 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                                 databaseSongs.child(String.valueOf(favoriteSong.getId())).removeValue(new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                        Toast.makeText(context, "Delete song success", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Xóa bài hát thành công", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -147,7 +149,7 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
                         databaseSongs.child(String.valueOf(song.getId())).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
                             @Override
                             public void onSuccess(Object o) {
-                                Toast.makeText(context, "Update success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Sửa bài hát thành công", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         });
@@ -166,14 +168,17 @@ public class FavoriteSongList extends  RecyclerView.Adapter<FavoriteSongList.Fav
         return 0;
     }
     protected class FavoriteSongHolder extends  RecyclerView.ViewHolder{
-        private TextView txtNameSong;
+        private TextView txtNameSong, txtCasiSong;
         private ImageView imvDelete, update_song;
+        private LinearLayout mLn;
 
         public FavoriteSongHolder(@NonNull View itemView) {
             super(itemView);
             txtNameSong = itemView.findViewById(R.id.tv_nameSong);
             imvDelete = itemView.findViewById(R.id.imv_deleteSong);
             update_song = itemView.findViewById(R.id.update_song);
+            txtCasiSong = itemView.findViewById(R.id.txt_casiSong);
+            mLn = itemView.findViewById(R.id.ln1);
         }
     }
 }

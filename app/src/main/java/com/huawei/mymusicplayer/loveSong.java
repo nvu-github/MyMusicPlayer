@@ -119,7 +119,7 @@ public class loveSong extends AppCompatActivity {
                         database.child(String.valueOf(loveSong.getId())).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(com.huawei.mymusicplayer.loveSong.this, "Delete song success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(com.huawei.mymusicplayer.loveSong.this, "Xóa bài hát khỏi danh sách yêu thích thành công", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

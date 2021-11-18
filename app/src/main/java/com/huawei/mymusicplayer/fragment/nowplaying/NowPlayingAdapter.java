@@ -115,14 +115,14 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "0");
+        ArrayList<String> mylist = new ArrayList<String>();
         if (userID != "0") {
             viewholder.love_song.setVisibility(View.VISIBLE);
-            viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean));
             database = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
             database.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ArrayList<String> mylist = new ArrayList<String>();
+
                     for (DataSnapshot songSnapshot : snapshot.getChildren()){
                         LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
                         mylist.add(lovesong.getName().toLowerCase());
@@ -140,6 +140,7 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
 
                 }
             });
+            viewholder.love_song.setOnClickListener(new OptionViewClick(pos, songBean, mylist));
         }
 
         ViewUtils.setVisibility(viewholder.lineImage, (getCount() - 1) != pos);
@@ -149,50 +150,32 @@ public class NowPlayingAdapter extends BaseSimpleAdapter<HwAudioPlayItem> {
     private static class OptionViewClick implements View.OnClickListener {
         int pos;
         HwAudioPlayItem songBean;
+        ArrayList<String> mylist;
         private DatabaseReference database_song;
 
         SharedPreferences prefs = getContext().getSharedPreferences(PROFILE_INFORMATION, MODE_PRIVATE);
         String userID = prefs.getString("union_id", "union_id");
 
-        OptionViewClick(int pos, HwAudioPlayItem songBean) {
+        OptionViewClick(int pos, HwAudioPlayItem songBean, ArrayList<String> mylist) {
             this.pos = pos;
             this.songBean = songBean;
+            this.mylist = mylist;
         }
 
         @Override
         public void onClick(View v) {
+            Log.i("TAG", "onClick mylist: " + mylist);
             database_song = FirebaseDatabase.getInstance("https://mymusicplayer-5e719-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("LoveSong");
-            database_song.orderByChild("userID").equalTo(userID).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ArrayList<String> mylist = new ArrayList<String>();
-                    String id = "";
-                    for (DataSnapshot songSnapshot : snapshot.getChildren()){
-                        LoveSong lovesong = songSnapshot.getValue(LoveSong.class);
-                        mylist.add(lovesong.getName().toLowerCase());
-
-                        if (lovesong.getName().toLowerCase().equals(songBean.getAudioTitle().toLowerCase())){
-                            id = lovesong.getId();
-                        }
+            if (!mylist.contains(songBean.getAudioTitle().toLowerCase())) {
+                String key = database_song.push().getKey();
+                LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
+                database_song.child(key).setValue(loveSong).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getContext(), "Thêm bài hát vào danh sách yêu thích thành công", Toast.LENGTH_SHORT).show();
                     }
-                    if (!mylist.contains(songBean.getAudioTitle().toLowerCase())) {
-                        String key = database_song.push().getKey();
-                        LoveSong loveSong = new LoveSong(songBean.getSinger(), songBean.getAudioTitle(), key, songBean.getAudioId(), userID);
-                        database_song.child(key).setValue(loveSong).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), "Thêm bài hát vào danh sách yêu thích thành công", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+                });
+            }
         }
     }
 }

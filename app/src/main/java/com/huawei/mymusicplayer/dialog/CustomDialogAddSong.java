@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.huawei.mymusicplayer.R;
@@ -72,7 +76,12 @@ public class CustomDialogAddSong extends Dialog {
             int randomNum = ThreadLocalRandom.current().nextInt(1, 99999 + 1);
             String id = String.valueOf(randomNum);
             FavoriteSong favoriteSong = new FavoriteSong(id, nameSong, artistSong, urlSong, userID);
-            databaseSongs.child(id).setValue(favoriteSong);
+            databaseSongs.child(id).setValue(favoriteSong).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(context, "Thêm bài hát thành công", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     // User click "Cancel" button.
